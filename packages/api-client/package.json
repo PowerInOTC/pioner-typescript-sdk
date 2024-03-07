@@ -1,0 +1,35 @@
+{
+  "name": "@pionerfriends/api-client",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "Pioner <contact@pioner.io>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "source": "./src/index.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "clean": "rm -rf dist && rm -f tsconfig.tsbuildinfo",
+    "winclean": "rmdir /s /q dist && del tsconfig.tsbuildinfo",
+    "build": "tsc -b",
+    "dev": "tsc -w"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "axios": "^1.6.5",
+    "ethers": "^6.10.0",
+    "ws": "^8.16.0"
+  },
+  "peerDependencies": {
+    "@types/node": "^20.11.25"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.5.10"
+  }
+}
