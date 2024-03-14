@@ -84,7 +84,7 @@ export class BlockchainInterface {
     bContractId: number,
   ): Promise<TransactionResponse> {
     const warpperUpdatePriceAndDefault = this.contracts[
-      'pionerV1Wrapper'
+      'PionerV1Wrapper'
     ].getFunction('warpperUpdatePriceAndDefault');
     return await warpperUpdatePriceAndDefault.call(
       null,
@@ -101,7 +101,7 @@ export class BlockchainInterface {
     index: number,
   ): Promise<TransactionResponse> {
     const warpperUpdatePriceAndCloseMarket = this.contracts[
-      'pionerV1Wrapper'
+      'PionerV1Wrapper'
     ].getFunction('warpperUpdatePriceAndCloseMarket');
     return await warpperUpdatePriceAndCloseMarket.call(
       null,
@@ -117,7 +117,7 @@ export class BlockchainInterface {
     signHash: string,
   ): Promise<TransactionResponse> {
     const warperCloseLimitMM =
-      this.contracts['pionerV1Wrapper'].getFunction('warperCloseLimitMM');
+      this.contracts['PionerV1Wrapper'].getFunction('warperCloseLimitMM');
     return await warperCloseLimitMM.call(null, quote, signHash);
   }
 
@@ -154,7 +154,7 @@ export class BlockchainInterface {
     expirySL: number[],
   ): Promise<TransactionResponse> {
     const wrapperOpenTPSLOracleSwap = this.contracts[
-      'pionerV1Wrapper'
+      'PionerV1Wrapper'
     ].getFunction('wrapperOpenTPSLOracleSwap');
     return await wrapperOpenTPSLOracleSwap.call(
       null,
@@ -199,7 +199,7 @@ export class BlockchainInterface {
     _acceptPrice: BigNumberish,
   ): Promise<TransactionResponse> {
     const warperOpenQuoteMM =
-      this.contracts['pionerV1Wrapper'].getFunction('warperOpenQuoteMM');
+      this.contracts['PionerV1Wrapper'].getFunction('warperOpenQuoteMM');
 
     return await warperOpenQuoteMM.call(
       null,
