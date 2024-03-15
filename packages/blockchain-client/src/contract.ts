@@ -1,31 +1,21 @@
 import { ethers, Contract } from 'ethers';
-import { FakeUSD } from '../abis/fakeUSD';
-import { PionerV1 as PionerV1Contract } from '../abis/PionerV1';
-import { PionerV1Close as PionerV1CloseContract } from '../abis/PionerV1Close';
-import { PionerV1Compliance as PionerV1ComplianceContract } from '../abis/PionerV1Compliance';
-import { PionerV1Default as PionerV1DefaultContract } from '../abis/PionerV1Default';
-import { PionerV1Open as PionerV1OpenContract } from '../abis/PionerV1Open';
-import { PionerV1Oracle as PionerV1OracleContract } from '../abis/PionerV1Oracle';
-import { PionerV1Utils as PionerV1UtilsContract } from '../abis/PionerV1Utils';
-import { PionerV1View as PionerV1ViewContract } from '../abis/PionerV1View';
-import { PionerV1Warper as PionerV1WarperContract } from '../abis/PionerV1Warper';
-import { networks } from '../networks';
-
-export type ContractInfo = {
-  name: string;
-  addresses: { [key: string]: string };
-  abi: ethers.InterfaceAbi;
-  events: { [key: string]: string };
-};
-
-export type Contracts = {
-  [key: string]: ContractInfo;
-};
+import { FakeUSD } from './abis/fakeUSD';
+import { PionerV1 as PionerV1Contract } from './abis/PionerV1';
+import { PionerV1Close as PionerV1CloseContract } from './abis/PionerV1Close';
+import { PionerV1Compliance as PionerV1ComplianceContract } from './abis/PionerV1Compliance';
+import { PionerV1Default as PionerV1DefaultContract } from './abis/PionerV1Default';
+import { PionerV1Open as PionerV1OpenContract } from './abis/PionerV1Open';
+import { PionerV1Oracle as PionerV1OracleContract } from './abis/PionerV1Oracle';
+import { PionerV1Utils as PionerV1UtilsContract } from './abis/PionerV1Utils';
+import { PionerV1View as PionerV1ViewContract } from './abis/PionerV1View';
+import { PionerV1Warper as PionerV1WarperContract } from './abis/PionerV1Warper';
+import { networks } from './networks';
+import { Contracts, ContractInfo, ContractConfig } from './types/contract';
 
 export const contracts: Contracts = {
   FakeUSD: {
     name: 'FakeUSD',
-    addresses: { sonic: networks.sonic.contracts.FakeUSDAddress },
+    version: '1.0',
     abi: FakeUSD.abi,
     events: {
       Approval: 'Approval',
@@ -34,7 +24,7 @@ export const contracts: Contracts = {
   },
   PionerV1: {
     name: 'PionerV1',
-    addresses: { sonic: networks.sonic.contracts.PionerV1Address },
+    version: '1.0',
     abi: PionerV1Contract.abi,
     events: {
       AddToOwedEvent: 'AddToOwedEvent',
@@ -47,7 +37,7 @@ export const contracts: Contracts = {
   },
   PionerV1Close: {
     name: 'PionerV1Close',
-    addresses: { sonic: networks.sonic.contracts.PionerV1CloseAddress },
+    version: '1.0',
     abi: PionerV1CloseContract.abi,
     events: {
       acceptCloseQuoteEvent: 'acceptCloseQuoteEvent',
@@ -61,9 +51,7 @@ export const contracts: Contracts = {
   },
   PionerV1Compliance: {
     name: 'PionerV1Compliance',
-    addresses: {
-      sonic: networks.sonic.contracts.PionerV1ComplianceAddress,
-    },
+    version: '1.0',
     abi: PionerV1ComplianceContract.abi,
     events: {
       bContractMigrated: 'bContractMigrated',
@@ -84,9 +72,7 @@ export const contracts: Contracts = {
   },
   PionerV1Default: {
     name: 'PionerV1Default',
-    addresses: {
-      sonic: networks.sonic.contracts.PionerV1DefaultAddress,
-    },
+    version: '1.0',
     abi: PionerV1DefaultContract.abi,
     events: {
       flashAuctionBuyBackEvent: 'flashAuctionBuyBackEvent',
@@ -96,7 +82,7 @@ export const contracts: Contracts = {
   },
   PionerV1Open: {
     name: 'PionerV1Open',
-    addresses: { sonic: networks.sonic.contracts.PionerV1OpenAddress },
+    version: '1.0',
     abi: PionerV1OpenContract.abi,
     events: {
       acceptQuoteEvent: 'acceptQuoteEvent',
@@ -109,9 +95,7 @@ export const contracts: Contracts = {
   },
   PionerV1Oracle: {
     name: 'PionerV1Oracle',
-    addresses: {
-      sonic: networks.sonic.contracts.PionerV1OracleAddress,
-    },
+    version: '1.0',
     abi: PionerV1OracleContract.abi,
     events: {
       deployBContract: 'deployBContract',
@@ -119,21 +103,19 @@ export const contracts: Contracts = {
   },
   PionerV1Utils: {
     name: 'PionerV1Utils',
-    addresses: { sonic: networks.sonic.contracts.PionerV1UtilsAddress },
+    version: '1.0',
     abi: PionerV1UtilsContract.abi,
     events: {},
   },
   PionerV1View: {
     name: 'PionerV1View',
-    addresses: { sonic: networks.sonic.contracts.PionerV1ViewAddress },
+    version: '1.0',
     abi: PionerV1ViewContract.abi,
     events: {},
   },
   PionerV1Wrapper: {
     name: 'PionerV1Wrapper',
-    addresses: {
-      sonic: networks.sonic.contracts.PionerV1WrapperAddress,
-    },
+    version: '1.0',
     abi: PionerV1WarperContract.abi,
     events: {
       EIP712DomainChanged: 'EIP712DomainChanged',
@@ -141,19 +123,20 @@ export const contracts: Contracts = {
   },
 };
 
-export interface ContractConfig {
-  contract: ContractInfo;
-  address: string;
-  contractRunner: ethers.ContractRunner;
-}
-
-export interface ContractEventConfig {
-  contract: Contract;
-  eventName: string;
-}
-
 export function getContract(config: ContractConfig): Contract {
   const { contract, address, contractRunner } = config;
 
   return new ethers.Contract(address, contract.abi, contractRunner);
+}
+
+export function getTypedDataDomain(
+  contract: ContractInfo,
+  network: string,
+): ethers.TypedDataDomain {
+  return {
+    name: contract.name,
+    version: contract.version,
+    chainId: networks[network].chainId,
+    verifyingContract: networks[network].contracts[contract.name],
+  };
 }

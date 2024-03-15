@@ -1,5 +1,5 @@
 import { TransactionResponse, ethers } from 'ethers';
-import { getContract, contracts } from './utils/contract';
+import { getContract, contracts } from './contract';
 import {
   BOracleSign,
   OpenQuoteSign,
@@ -7,6 +7,7 @@ import {
   OpenCloseQuoteSign,
 } from './types/contract';
 import { BigNumberish } from 'ethers';
+import { networks } from './networks';
 
 export class BlockchainInterface {
   private contracts: { [contractName: string]: ethers.Contract };
@@ -19,61 +20,61 @@ export class BlockchainInterface {
 
     this.contracts['FakeUSD'] = getContract({
       contract: contracts.FakeUSD,
-      address: contracts.FakeUSD.addresses[network],
+      address: networks[network].contracts.FakeUSD,
       contractRunner: this.contractRunner,
     });
 
     this.contracts['PionerV1'] = getContract({
       contract: contracts.PionerV1,
-      address: contracts.PionerV1.addresses[network],
+      address: networks[network].contracts.PionerV1,
       contractRunner: this.contractRunner,
     });
 
     this.contracts['PionerV1Close'] = getContract({
       contract: contracts.PionerV1Close,
-      address: contracts.PionerV1Close.addresses[network],
+      address: networks[network].contracts.PionerV1Close,
       contractRunner: this.contractRunner,
     });
 
     this.contracts['PionerV1Compliance'] = getContract({
       contract: contracts.PionerV1Compliance,
-      address: contracts.PionerV1Compliance.addresses[network],
+      address: networks[network].contracts.PionerV1Compliance,
       contractRunner: this.contractRunner,
     });
 
     this.contracts['PionerV1Default'] = getContract({
       contract: contracts.PionerV1Default,
-      address: contracts.PionerV1Default.addresses[network],
+      address: networks[network].contracts.PionerV1Default,
       contractRunner: this.contractRunner,
     });
 
     this.contracts['PionerV1Open'] = getContract({
       contract: contracts.PionerV1Open,
-      address: contracts.PionerV1Open.addresses[network],
+      address: networks[network].contracts.PionerV1Open,
       contractRunner: this.contractRunner,
     });
 
     this.contracts['PionerV1Oracle'] = getContract({
       contract: contracts.PionerV1Oracle,
-      address: contracts.PionerV1Oracle.addresses[network],
+      address: networks[network].contracts.PionerV1Oracle,
       contractRunner: this.contractRunner,
     });
 
     this.contracts['PionerV1Utils'] = getContract({
       contract: contracts.PionerV1Utils,
-      address: contracts.PionerV1Utils.addresses[network],
+      address: networks[network].contracts.PionerV1Utils,
       contractRunner: this.contractRunner,
     });
 
     this.contracts['PionerV1View'] = getContract({
       contract: contracts.PionerV1View,
-      address: contracts.PionerV1View.addresses[network],
+      address: networks[network].contracts.PionerV1View,
       contractRunner: this.contractRunner,
     });
 
     this.contracts['PionerV1Wrapper'] = getContract({
       contract: contracts.PionerV1Wrapper,
-      address: contracts.PionerV1Wrapper.addresses[network],
+      address: networks[network].contracts.PionerV1Wrapper,
       contractRunner: this.contractRunner,
     });
   }

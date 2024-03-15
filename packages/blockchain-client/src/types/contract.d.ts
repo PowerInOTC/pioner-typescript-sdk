@@ -1,4 +1,26 @@
-import { BigNumberish } from 'ethers';
+import ethers, { BigNumberish, Contract } from 'ethers';
+
+export type ContractInfo = {
+  name: string;
+  version: string;
+  abi: ethers.InterfaceAbi;
+  events: { [key: string]: string };
+};
+
+export type Contracts = {
+  [key: string]: ContractInfo;
+};
+
+export type ContractConfig = {
+  contract: ContractInfo;
+  address: string;
+  contractRunner: ethers.ContractRunner;
+};
+
+export type ContractEventConfig = {
+  contract: Contract;
+  eventName: string;
+};
 
 export type BOracleSign = {
   x: BigNumberish;
@@ -45,7 +67,7 @@ export type PionSign = {
   nonce: string;
 };
 
-type OpenCloseQuoteSign = {
+export type OpenCloseQuoteSign = {
   bContractId: number;
   price: number;
   amount: number;
