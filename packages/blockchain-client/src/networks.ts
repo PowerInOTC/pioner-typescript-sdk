@@ -1,6 +1,6 @@
-import { networks as networksType } from './types/network';
+import { Networks } from './types/network';
 
-export const networks: networksType = {
+export const networks: Networks = {
   bnbTest: {
     name: 'BNB Smart Chain Testnet',
     pionerChainId: 'bnbTest',

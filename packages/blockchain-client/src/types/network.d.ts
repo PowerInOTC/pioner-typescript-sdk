@@ -50,6 +50,6 @@ export type NetworkInfo = {
   };
 };
 
-export type networks = {
+export type Networks = {
   [K in NetworkKey]: NetworkInfo;
 };
