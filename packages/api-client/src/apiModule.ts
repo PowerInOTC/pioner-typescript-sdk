@@ -1,4 +1,4 @@
-import { HDNodeWallet, Wallet } from 'ethers';
+import ethers from 'ethers';
 import axios, { AxiosResponse } from 'axios';
 import { config } from './config';
 import { QuoteRequest, RfqRequest } from './types/requests';
@@ -138,7 +138,7 @@ export async function login(
 }
 
 export async function getPayloadAndLogin(
-  wallet: Wallet | HDNodeWallet,
+  wallet: ethers.Wallet,
 ): Promise<string | null> {
   const address = wallet.address;
   const payloadResponse = await getPayload(address);
@@ -169,25 +169,4 @@ export async function getPayloadAndLogin(
   const token = loginResponse.data.token;
 
   return token;
-}
-
-export async function createWalletAndSignIn(
-  privateKey?: string,
-): Promise<{ wallet: Wallet | HDNodeWallet | null; token: string | null }> {
-  let wallet: Wallet | HDNodeWallet;
-  if (privateKey) {
-    //const provider = new ethers.JsonRpcProvider('https://mainnet.infura.io/v3/INFURA_API_KEY')
-    //wallet = new Wallet(privateKey, provider);
-    wallet = new Wallet(privateKey);
-  } else {
-    wallet = Wallet.createRandom();
-  }
-
-  const token = await getPayloadAndLogin(wallet);
-
-  if (!token) {
-    return { wallet: null, token: null };
-  }
-
-  return { wallet: wallet, token: token };
 }
