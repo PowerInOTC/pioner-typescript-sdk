@@ -1,3 +1,3 @@
 export * from './blockchainModule';
-export * from './contract';
+export * from './contracts';
 export * from './types/contract';

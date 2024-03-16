@@ -1,10 +1,23 @@
 import ethers, { BigNumberish, Contract } from 'ethers';
 
+export type ContractKey =
+  | 'FakeUSD'
+  | 'PionerV1'
+  | 'PionerV1Close'
+  | 'PionerV1Compliance'
+  | 'PionerV1Default'
+  | 'PionerV1Open'
+  | 'PionerV1Oracle'
+  | 'PionerV1Utils'
+  | 'PionerV1View'
+  | 'PionerV1Wrapper';
+
 export type ContractInfo = {
   name: string;
   version: string;
   abi: ethers.InterfaceAbi;
   events: { [key: string]: string };
+  functions: { [key: string]: string };
 };
 
 export type Contracts = {

@@ -1,78 +1,80 @@
 import { TransactionResponse, ethers } from 'ethers';
-import { getContract, contracts } from './contract';
+import { getContract, contracts } from './contracts';
 import {
   BOracleSign,
   OpenQuoteSign,
   PionSign,
   OpenCloseQuoteSign,
+  ContractKey,
 } from './types/contract';
 import { BigNumberish } from 'ethers';
 import { networks } from './networks';
+import { NetworkKey } from './types/network';
 
 export class BlockchainInterface {
   private contracts: { [contractName: string]: ethers.Contract };
   private contractRunner: ethers.ContractRunner;
 
-  constructor(network: string, contractRunner: ethers.ContractRunner) {
+  constructor(network: NetworkKey, contractRunner: ethers.ContractRunner) {
     this.contractRunner = contractRunner;
 
     this.contracts = {};
 
-    this.contracts['FakeUSD'] = getContract({
+    this.contracts[contracts.FakeUSD.name] = getContract({
       contract: contracts.FakeUSD,
       address: networks[network].contracts.FakeUSD,
       contractRunner: this.contractRunner,
     });
 
-    this.contracts['PionerV1'] = getContract({
+    this.contracts[contracts.PionerV1.name] = getContract({
       contract: contracts.PionerV1,
       address: networks[network].contracts.PionerV1,
       contractRunner: this.contractRunner,
     });
 
-    this.contracts['PionerV1Close'] = getContract({
+    this.contracts[contracts.PionerV1Close.name] = getContract({
       contract: contracts.PionerV1Close,
       address: networks[network].contracts.PionerV1Close,
       contractRunner: this.contractRunner,
     });
 
-    this.contracts['PionerV1Compliance'] = getContract({
+    this.contracts[contracts.PionerV1Compliance.name] = getContract({
       contract: contracts.PionerV1Compliance,
       address: networks[network].contracts.PionerV1Compliance,
       contractRunner: this.contractRunner,
     });
 
-    this.contracts['PionerV1Default'] = getContract({
+    this.contracts[contracts.PionerV1Default.name] = getContract({
       contract: contracts.PionerV1Default,
       address: networks[network].contracts.PionerV1Default,
       contractRunner: this.contractRunner,
     });
 
-    this.contracts['PionerV1Open'] = getContract({
+    this.contracts[contracts.PionerV1Open.name] = getContract({
       contract: contracts.PionerV1Open,
       address: networks[network].contracts.PionerV1Open,
       contractRunner: this.contractRunner,
     });
 
-    this.contracts['PionerV1Oracle'] = getContract({
+    this.contracts[contracts.PionerV1Oracle.name] = getContract({
       contract: contracts.PionerV1Oracle,
       address: networks[network].contracts.PionerV1Oracle,
       contractRunner: this.contractRunner,
     });
 
-    this.contracts['PionerV1Utils'] = getContract({
+    this.contracts[contracts.PionerV1Utils.name] = getContract({
       contract: contracts.PionerV1Utils,
       address: networks[network].contracts.PionerV1Utils,
       contractRunner: this.contractRunner,
     });
 
-    this.contracts['PionerV1View'] = getContract({
+    this.contracts[contracts.PionerV1View.name] = getContract({
       contract: contracts.PionerV1View,
       address: networks[network].contracts.PionerV1View,
       contractRunner: this.contractRunner,
     });
 
-    this.contracts['PionerV1Wrapper'] = getContract({
+    this.contracts[contracts.PionerV1Wrapper.name] = getContract({
       contract: contracts.PionerV1Wrapper,
       address: networks[network].contracts.PionerV1Wrapper,
       contractRunner: this.contractRunner,
@@ -84,10 +86,12 @@ export class BlockchainInterface {
     bOracleId: number,
     bContractId: number,
   ): Promise<TransactionResponse> {
-    const warpperUpdatePriceAndDefault = this.contracts[
-      'PionerV1Wrapper'
-    ].getFunction('warpperUpdatePriceAndDefault');
-    return await warpperUpdatePriceAndDefault.call(
+    const wrapperUpdatePriceAndDefault = this.contracts[
+      contracts.PionerV1Wrapper.name
+    ].getFunction(
+      contracts.PionerV1Wrapper.functions.wrapperUpdatePriceAndDefault,
+    );
+    return await wrapperUpdatePriceAndDefault.call(
       null,
       priceSignature,
       bOracleId,
@@ -101,10 +105,12 @@ export class BlockchainInterface {
     bCloseQuoteId: number,
     index: number,
   ): Promise<TransactionResponse> {
-    const warpperUpdatePriceAndCloseMarket = this.contracts[
-      'PionerV1Wrapper'
-    ].getFunction('warpperUpdatePriceAndCloseMarket');
-    return await warpperUpdatePriceAndCloseMarket.call(
+    const wrapperUpdatePriceAndCloseMarket = this.contracts[
+      contracts.PionerV1Wrapper.name
+    ].getFunction(
+      contracts.PionerV1Wrapper.functions.wrapperUpdatePriceAndCloseMarket,
+    );
+    return await wrapperUpdatePriceAndCloseMarket.call(
       null,
       priceSignature,
       bOracleId,
@@ -117,9 +123,10 @@ export class BlockchainInterface {
     quote: OpenCloseQuoteSign,
     signHash: string,
   ): Promise<TransactionResponse> {
-    const warperCloseLimitMM =
-      this.contracts['PionerV1Wrapper'].getFunction('warperCloseLimitMM');
-    return await warperCloseLimitMM.call(null, quote, signHash);
+    const wrapperCloseLimitMM = this.contracts[
+      contracts.PionerV1Wrapper.name
+    ].getFunction(contracts.PionerV1Wrapper.functions.wrapperCloseLimitMM);
+    return await wrapperCloseLimitMM.call(null, quote, signHash);
   }
 
   async wrapperOpenTPSLOracleSwap(
@@ -155,8 +162,10 @@ export class BlockchainInterface {
     expirySL: number[],
   ): Promise<TransactionResponse> {
     const wrapperOpenTPSLOracleSwap = this.contracts[
-      'PionerV1Wrapper'
-    ].getFunction('wrapperOpenTPSLOracleSwap');
+      contracts.PionerV1Wrapper.name
+    ].getFunction(
+      contracts.PionerV1Wrapper.functions.wrapperOpenTPSLOracleSwap,
+    );
     return await wrapperOpenTPSLOracleSwap.call(
       null,
       isLong,
@@ -199,10 +208,11 @@ export class BlockchainInterface {
     openQuoteSignature: string,
     _acceptPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const warperOpenQuoteMM =
-      this.contracts['PionerV1Wrapper'].getFunction('warperOpenQuoteMM');
+    const wrapperOpenQuoteMM = this.contracts[
+      contracts.PionerV1Wrapper.name
+    ].getFunction(contracts.PionerV1Wrapper.functions.wrapperOpenQuoteMM);
 
-    return await warperOpenQuoteMM.call(
+    return await wrapperOpenQuoteMM.call(
       null,
       bOracleSign,
       signaturebOracleSign,
@@ -213,7 +223,7 @@ export class BlockchainInterface {
   }
 
   async fetchEvent(
-    contractName: string,
+    contractName: ContractKey,
     eventName: string,
     fromBlock: ethers.BlockTag,
     toBlock: ethers.BlockTag = 'latest',

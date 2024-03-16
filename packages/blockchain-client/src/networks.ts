@@ -1,4 +1,4 @@
-import { networks as networksType } from './types/networks';
+import { networks as networksType } from './types/network';
 
 export const networks: networksType = {
   bnbTest: {
@@ -403,16 +403,16 @@ export const networks: networksType = {
     chainId: 64165,
     networkId: 64165,
     contracts: {
-      FakeUSD: '0x60a75B099Fe78Cb7Fad097bF2C082c467686ecd5',
-      PionerV1: '0xEA0224877722d59aef9c16aafD83d132634bDaC1',
-      PionerV1Compliance: '0xD6C07Ed68941B2B75c7A42008C446DDf67795ecf',
-      PionerV1Open: '0x4549500cb81DDA59fF8cB21b7b77C630181cDFA5',
-      PionerV1Close: '0x8Fe0bcCAFA648b093C448ed8Bb732F65Cef734c2',
-      PionerV1Default: '0x91570188747272F90DFF014def0109B399b7d63f',
-      PionerV1View: '0xc11f825fF2A7Ac7bD4F4B28bDEdbbFA5BaeEC0D9',
-      PionerV1Oracle: '0xf447AbDcADC871EF6E366f26DBA663bACE45dD5d',
-      PionerV1Utils: '0xb400785d741f8815c657a03eebb04944eb7d7b9c',
-      PionerV1Wrapper: '0x3941DdF936ffe2de5Cd3648ac5ee2c0F8C171A67',
+      FakeUSD: '0x6A744031609cfCef46AaC03F516550FB73Cc1390',
+      PionerV1: '0x0522ffEAE4Fd670f63482E969FD4B1dE8866F972',
+      PionerV1Compliance: '0xf82C9516268C6DE94d99d18706769377113861C3',
+      PionerV1Open: '0xF9d4DeD362a9C2728be18eE62A7E3076054b3279',
+      PionerV1Close: '0xb638b9d2390FF58a6Abf9aF33337F98071758D98',
+      PionerV1Default: '0x874547948f91477848f2C36d8B06f52aB7AEfD47',
+      PionerV1View: '0x5C718738486D8130b8BD628d27bc01A86EB17a8f',
+      PionerV1Oracle: '0xBA8c5eF77B76e8dA166eFE11415Aac91B969579B',
+      PionerV1Utils: '0x31eaee6cf9e9cfe5c42cd703ab390c2c0b5240b1',
+      PionerV1Wrapper: '0x271990c7a1BDD612EC4c60492b24Dc693af67198',
     },
   },
 };

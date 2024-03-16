@@ -8,9 +8,10 @@ import { PionerV1Open as PionerV1OpenContract } from './abis/PionerV1Open';
 import { PionerV1Oracle as PionerV1OracleContract } from './abis/PionerV1Oracle';
 import { PionerV1Utils as PionerV1UtilsContract } from './abis/PionerV1Utils';
 import { PionerV1View as PionerV1ViewContract } from './abis/PionerV1View';
-import { PionerV1Warper as PionerV1WarperContract } from './abis/PionerV1Warper';
+import { PionerV1Wrapper as PionerV1WrapperContract } from './abis/PionerV1Wrapper';
 import { networks } from './networks';
 import { Contracts, ContractInfo, ContractConfig } from './types/contract';
+import { NetworkKey } from './types/network';
 
 export const contracts: Contracts = {
   FakeUSD: {
@@ -21,6 +22,7 @@ export const contracts: Contracts = {
       Approval: 'Approval',
       Transfer: 'Transfer',
     },
+    functions: {},
   },
   PionerV1: {
     name: 'PionerV1',
@@ -34,6 +36,7 @@ export const contracts: Contracts = {
       PayOwedEvent: 'PayOwedEvent',
       updatePricePythEvent: 'updatePricePythEvent',
     },
+    functions: {},
   },
   PionerV1Close: {
     name: 'PionerV1Close',
@@ -48,6 +51,7 @@ export const contracts: Contracts = {
       expirateBContractEvent: 'expirateBContractEvent',
       openCloseQuoteEvent: 'openCloseQuoteEvent',
     },
+    functions: {},
   },
   PionerV1Compliance: {
     name: 'PionerV1Compliance',
@@ -69,6 +73,7 @@ export const contracts: Contracts = {
       MigrationRefused: 'MigrationRefused',
       WithdrawEvent: 'WithdrawEvent',
     },
+    functions: {},
   },
   PionerV1Default: {
     name: 'PionerV1Default',
@@ -79,6 +84,7 @@ export const contracts: Contracts = {
       liquidatedEvent: 'liquidatedEvent',
       settledEvent: 'settledEvent',
     },
+    functions: {},
   },
   PionerV1Open: {
     name: 'PionerV1Open',
@@ -92,6 +98,7 @@ export const contracts: Contracts = {
       openQuoteEvent: 'openQuoteEvent',
       openQuoteSignedEvent: 'openQuoteSignedEvent',
     },
+    functions: {},
   },
   PionerV1Oracle: {
     name: 'PionerV1Oracle',
@@ -100,25 +107,35 @@ export const contracts: Contracts = {
     events: {
       deployBContract: 'deployBContract',
     },
+    functions: {},
   },
   PionerV1Utils: {
     name: 'PionerV1Utils',
     version: '1.0',
     abi: PionerV1UtilsContract.abi,
     events: {},
+    functions: {},
   },
   PionerV1View: {
     name: 'PionerV1View',
     version: '1.0',
     abi: PionerV1ViewContract.abi,
     events: {},
+    functions: {},
   },
   PionerV1Wrapper: {
     name: 'PionerV1Wrapper',
     version: '1.0',
-    abi: PionerV1WarperContract.abi,
+    abi: PionerV1WrapperContract.abi,
     events: {
       EIP712DomainChanged: 'EIP712DomainChanged',
+    },
+    functions: {
+      wrapperCloseLimitMM: 'wrapperCloseLimitMM',
+      wrapperOpenQuoteMM: 'wrapperOpenQuoteMM',
+      wrapperOpenTPSLOracleSwap: 'wrapperOpenTPSLOracleSwap',
+      wrapperUpdatePriceAndCloseMarket: 'wrapperUpdatePriceAndCloseMarket',
+      wrapperUpdatePriceAndDefault: 'wrapperUpdatePriceAndDefault',
     },
   },
 };
@@ -131,7 +148,7 @@ export function getContract(config: ContractConfig): Contract {
 
 export function getTypedDataDomain(
   contract: ContractInfo,
-  network: string,
+  network: NetworkKey,
 ): ethers.TypedDataDomain {
   return {
     name: contract.name,

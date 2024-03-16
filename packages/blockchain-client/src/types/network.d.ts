@@ -1,6 +1,18 @@
+type NetworkKey =
+  | 'bnbTest'
+  | 'arbitrumSepoliaTest'
+  | 'mumbai'
+  | 'opSepoliaTest'
+  | 'fuji'
+  | 'avax'
+  | 'mantaTest'
+  | 'baseSepoliaTest'
+  | 'skevmTest'
+  | 'sonic';
+
 export type NetworkInfo = {
   name: string;
-  pionerChainId: string;
+  pionerChainId: NetworkKey;
   config?: string;
   title?: string;
   chain?: string;
@@ -39,5 +51,5 @@ export type NetworkInfo = {
 };
 
 export type networks = {
-  [key: string]: NetworkInfo;
+  [K in NetworkKey]: NetworkInfo;
 };
