@@ -1,8 +1,9 @@
-type RfqResponse = {
+export interface RfqResponse {
   id: string;
   chainId: number;
   createdAt: number;
   userId: string;
+  userAddress: string;
   expiration: number;
   AssetAId: string;
   AssetBId: string;
@@ -30,12 +31,14 @@ type RfqResponse = {
   lExpirationB: number;
   lTimelockA: number;
   lTimelockB: number;
-};
+}
 
-type QuoteResponse = {
+export interface QuoteResponse {
   id: string;
   chainId: number;
   createdAt: number;
+  userId: string;
+  userAddress: string;
   rfqId: string;
   expiration: number;
   sMarketPrice: string;
@@ -44,6 +47,4 @@ type QuoteResponse = {
   lMarketPrice: string;
   lPrice: string;
   lQuantity: string;
-};
-
-export { RfqResponse, QuoteResponse };
+}

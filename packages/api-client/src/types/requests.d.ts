@@ -1,4 +1,4 @@
-type RfqRequest = {
+export interface RfqRequest {
   chainId: number;
   expiration: number;
   assetAId: string;
@@ -27,9 +27,9 @@ type RfqRequest = {
   lExpirationB: number;
   lTimelockA: number;
   lTimelockB: number;
-};
+}
 
-type QuoteRequest = {
+export interface QuoteRequest {
   chainId: number;
   rfqId: string;
   expiration: number;
@@ -39,6 +39,4 @@ type QuoteRequest = {
   lMarketPrice: string;
   lPrice: string;
   lQuantity: string;
-};
-
-export { RfqRequest, QuoteRequest };
+}

@@ -12,12 +12,12 @@ export async function getPrices(
   token: string,
   timeout: number = 3000,
 ): Promise<AxiosResponse | undefined> {
-  let url = `${protocol}://${serverAddress}:${serverPort}/api/v1/get_prices?`;
-  url += symbols.map((symbol) => `ids[]=${symbol}`).join('&');
+  let url = `${protocol}://${serverAddress}:${serverPort}/api/v1/get_prices`;
+  url += '?' + symbols.map((symbol) => `ids[]=${symbol}`).join('&');
 
   return await axios.get(url, {
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: token,
     },
     timeout: timeout,
   });
@@ -33,7 +33,7 @@ export async function sendRfq(
     rfq,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
       timeout: timeout,
     },
@@ -50,7 +50,7 @@ export async function getRfqs(
     `${protocol}://${serverAddress}:${serverPort}/api/v1/get_rfqs`,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
       params: { start: start, end: end },
       timeout: timeout,
@@ -74,7 +74,7 @@ export async function getQuotes(
         end: end,
       },
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
       timeout: timeout,
     },
@@ -91,7 +91,7 @@ export async function sendQuote(
     quote,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
       timeout: timeout,
     },
@@ -107,7 +107,7 @@ export async function logout(
     null,
     {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: token,
       },
       timeout: timeout,
     },

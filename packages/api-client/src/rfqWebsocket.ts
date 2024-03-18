@@ -3,25 +3,17 @@ import { ResilientWebSocketClient } from './utils/websocketClient';
 import { config } from './config';
 import { RfqResponse } from './types/responses';
 
-export type PriceFeedRequestConfig = {
-  verbose?: boolean;
-  binary?: boolean;
-  allowOutOfOrder?: boolean;
-};
-
-type ServerMessage = RfqResponse;
-
 export class RfqWebsocketClient {
   private wsClient?: ResilientWebSocketClient;
   private readonly wsEndpoint: string;
   private readonly protocol: string;
-  private onMessageCallback?: (message: ServerMessage) => void;
+  private onMessageCallback?: (message: RfqResponse) => void;
   private onErrorCallback?: (error: Error) => void;
   private onReconnectCallback?: () => void;
   private onCloseCallback?: () => void;
 
   constructor(
-    onMessage?: (message: ServerMessage) => void,
+    onMessage?: (message: RfqResponse) => void,
     onError?: (error: Error) => void,
     onReconnect?: () => void,
     onClose?: () => void,
@@ -60,9 +52,9 @@ export class RfqWebsocketClient {
     };
 
     this.wsClient.onMessage = (data: WebSocket.Data) => {
-      let message: ServerMessage;
+      let message: RfqResponse;
       try {
-        message = JSON.parse(data.toString()) as ServerMessage;
+        message = JSON.parse(data.toString()) as RfqResponse;
         if (this.onMessageCallback) {
           this.onMessageCallback(message);
         }
@@ -82,21 +74,6 @@ export class RfqWebsocketClient {
   }
 
   private onWsError(error: Error) {
-    /*if (typeof process !== "undefined" && typeof process.exit === "function") {
-            Logger.error('ws', `Caught an error: ${error}`);
-            Logger.error('ws', 'Halting the process due to the websocket error');
-            /*try {
-                this.closeWebSocket();
-                this.subscribeRfqs();
-            } catch (error) {
-                if (error instanceof Error) {
-                    Logger.error('app', `Caught an error: ${error.message}`);
-                }
-            
-        }
-        else {
-        Logger.error('ws', 'Cannot halt process. Please handle the websocket error.');
-        }*/
     if (this.onErrorCallback) {
       this.onErrorCallback(error);
     }

@@ -46,9 +46,7 @@ export class ResilientWebSocketClient {
       return;
     }
 
-    const headers = this.token
-      ? { Authorization: `Bearer ${this.token}` }
-      : undefined;
+    const headers = this.token ? { Authorization: this.token } : undefined;
     this.wsClient = new WebSocket(this.endpoint, { headers: headers });
 
     this.wsUserClosed = false;

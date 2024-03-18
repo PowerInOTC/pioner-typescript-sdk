@@ -1,14 +1,12 @@
-type Price = {
+export interface Price {
   symbol: string;
   type: string;
   bidPrice: string;
   askPrice: string;
   provider: string;
   timestamp: number;
-};
+}
 
-type Prices = {
+export interface Prices {
   [assetName: string]: Price;
-};
-
-export { Price, Prices };
+}
