@@ -22,10 +22,10 @@
     "src"
   ],
   "dependencies": {
-    "ethers": "^6.10.0"
+    "ethers": "^6.11.1"
   },
   "peerDependencies": {
     "@types/node": "^20.11.25"
   },
-  "gitHead": "6d696c29fc590f9d59b5866163203507e67d0b90"
+  "gitHead": "34178f911d3a7d0d39bc6b43ebba9a68570b98ed"
 }

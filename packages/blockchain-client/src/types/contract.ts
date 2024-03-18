@@ -12,30 +12,30 @@ export type ContractKey =
   | 'PionerV1View'
   | 'PionerV1Wrapper';
 
-export type ContractInfo = {
+export interface ContractInfo {
   name: string;
   version: string;
   abi: ethers.InterfaceAbi;
   events: { [key: string]: string };
   functions: { [key: string]: string };
-};
+}
 
 export type Contracts = {
-  [key: string]: ContractInfo;
+  [K in ContractKey]: ContractInfo;
 };
 
-export type ContractConfig = {
+export interface ContractConfig {
   contract: ContractInfo;
   address: string;
   contractRunner: ethers.ContractRunner;
-};
+}
 
-export type ContractEventConfig = {
+export interface ContractEventConfig {
   contract: Contract;
   eventName: string;
-};
+}
 
-export type BOracleSign = {
+export interface BOracleSign {
   x: BigNumberish;
   parity: number;
   maxConfidence: BigNumberish;
@@ -51,9 +51,9 @@ export type BOracleSign = {
   timeLock: BigNumberish;
   signatureHashOpenQuote: string;
   nonce: BigNumberish;
-};
+}
 
-export type OpenQuoteSign = {
+export interface OpenQuoteSign {
   isLong: boolean;
   bOracleId: BigNumberish;
   price: BigNumberish;
@@ -64,9 +64,9 @@ export type OpenQuoteSign = {
   affiliate: string;
   authorized: string;
   nonce: BigNumberish;
-};
+}
 
-export type PionSign = {
+export interface PionSign {
   appId: number;
   reqId: string;
   requestassetHex: string;
@@ -78,9 +78,9 @@ export type PionSign = {
   signature: number;
   owner: string;
   nonce: string;
-};
+}
 
-export type OpenCloseQuoteSign = {
+export interface OpenCloseQuoteSign {
   bContractId: number;
   price: number;
   amount: number;
@@ -88,4 +88,4 @@ export type OpenCloseQuoteSign = {
   expiry: number;
   authorized: string;
   nonce: number;
-};
+}

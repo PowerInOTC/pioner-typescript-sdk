@@ -1,4 +1,4 @@
-type NetworkKey =
+export type NetworkKey =
   | 'bnbTest'
   | 'arbitrumSepoliaTest'
   | 'mumbai'
@@ -10,7 +10,7 @@ type NetworkKey =
   | 'skevmTest'
   | 'sonic';
 
-export type NetworkInfo = {
+export interface NetworkInfo {
   name: string;
   pionerChainId: NetworkKey;
   config?: string;
@@ -48,7 +48,7 @@ export type NetworkInfo = {
   contracts: {
     [key: string]: string;
   };
-};
+}
 
 export type Networks = {
   [K in NetworkKey]: NetworkInfo;
