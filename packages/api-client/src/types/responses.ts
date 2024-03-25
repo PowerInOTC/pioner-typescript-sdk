@@ -5,8 +5,8 @@ export interface RfqResponse {
   userId: string;
   userAddress: string;
   expiration: number;
-  AssetAId: string;
-  AssetBId: string;
+  assetAId: string;
+  assetBId: string;
   sPrice: string;
   sQuantity: string;
   sInterestRate: string;
