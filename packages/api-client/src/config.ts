@@ -1,5 +1,5 @@
 export const config = {
   https: true,
-  serverAddress: 'vps-b9bb65e6.vps.ovh.ca',
+  serverAddress: 'api.pio.finance',
   serverPort: '3000',
 };
