@@ -29,7 +29,7 @@ export interface NetworkInfo {
   };
   infoURL?: string;
   shortName?: string;
-  chainId?: number;
+  chainId: number;
   networkId?: number;
   slip44?: number;
   explorers?: {
