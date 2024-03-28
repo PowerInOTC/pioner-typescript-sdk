@@ -222,6 +222,48 @@ export class BlockchainInterface {
     );
   }
 
+  async mint(amount: BigNumberish, gasLimit: BigNumberish, gasPrice: BigNumberish): Promise<TransactionResponse> {
+    const mint = this.contracts[contracts.FakeUSD.name].getFunction(contracts.FakeUSD.functions.mint);
+    return await mint(amount, { gasLimit, gasPrice });
+  }
+  
+  async approve(spender: string, amount: BigNumberish, gasLimit: BigNumberish, gasPrice: BigNumberish): Promise<TransactionResponse> {
+    const approve = this.contracts[contracts.FakeUSD.name].getFunction(contracts.FakeUSD.functions.approve);
+    return await approve(spender, amount, { gasLimit, gasPrice });
+  }
+  
+  async deposit(amount: BigNumberish, bContractId: number, user: string, gasLimit: BigNumberish, gasPrice: BigNumberish): Promise<TransactionResponse> {
+    const deposit = this.contracts[contracts.PionerV1Compliance.name].getFunction(contracts.PionerV1Compliance.functions.deposit);
+    return await deposit(amount, bContractId, user, { gasLimit, gasPrice });
+  }
+  
+  async initiateWithdraw(amount: BigNumberish, gasLimit: BigNumberish, gasPrice: BigNumberish): Promise<TransactionResponse> {
+    const initiateWithdraw = this.contracts[contracts.PionerV1Compliance.name].getFunction(contracts.PionerV1Compliance.functions.initiateWithdraw);
+    return await initiateWithdraw(amount, { gasLimit, gasPrice });
+  }
+  
+  async withdraw(bContractId: number, user: string, gasLimit: BigNumberish, gasPrice: BigNumberish): Promise<TransactionResponse> {
+    const withdraw = this.contracts[contracts.PionerV1Compliance.name].getFunction(contracts.PionerV1Compliance.functions.withdraw);
+    return await withdraw(bContractId, user, { gasLimit, gasPrice });
+  }
+
+  async estimateGasPrice(): Promise<BigNumberish> {
+    const gasPrice = await this.contractRunner.getGasPrice();
+    return gasPrice;
+  }
+
+  async estimateGasLimit(
+    contractName: ContractKey,
+    functionName: string,
+    ...args: any[]
+  ): Promise<BigNumberish> {
+    const contract = this.contracts[contractName];
+    const contractFunction = contract.getFunction(functionName);
+    const gasLimit = await contractFunction.estimateGas(...args);
+    return gasLimit;
+  }
+  
+
   async fetchEvent(
     contractName: ContractKey,
     eventName: string,
