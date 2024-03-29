@@ -62,12 +62,6 @@ export class BlockchainInterface {
       contractRunner: this.contractRunner,
     });
 
-    this.contracts[contracts.PionerV1Utils.name] = getContract({
-      contract: contracts.PionerV1Utils,
-      address: networks[network].contracts.PionerV1Utils,
-      contractRunner: this.contractRunner,
-    });
-
     this.contracts[contracts.PionerV1View.name] = getContract({
       contract: contracts.PionerV1View,
       address: networks[network].contracts.PionerV1View,
@@ -85,18 +79,15 @@ export class BlockchainInterface {
     priceSignature: PionSign,
     bOracleId: number,
     bContractId: number,
+    gasLimit: BigNumberish,
+    gasPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const wrapperUpdatePriceAndDefault = this.contracts[
+    return await this.contracts[
       contracts.PionerV1Wrapper.name
-    ].getFunction(
-      contracts.PionerV1Wrapper.functions.wrapperUpdatePriceAndDefault,
-    );
-    return await wrapperUpdatePriceAndDefault.call(
-      null,
-      priceSignature,
-      bOracleId,
-      bContractId,
-    );
+    ].wrapperUpdatePriceAndDefault(priceSignature, bOracleId, bContractId, {
+      gasLimit,
+      gasPrice,
+    });
   }
 
   async wrapperUpdatePriceAndCloseMarket(
@@ -104,29 +95,35 @@ export class BlockchainInterface {
     bOracleId: number,
     bCloseQuoteId: number,
     index: number,
+    gasLimit: BigNumberish,
+    gasPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const wrapperUpdatePriceAndCloseMarket = this.contracts[
+    return await this.contracts[
       contracts.PionerV1Wrapper.name
-    ].getFunction(
-      contracts.PionerV1Wrapper.functions.wrapperUpdatePriceAndCloseMarket,
-    );
-    return await wrapperUpdatePriceAndCloseMarket.call(
-      null,
+    ].wrapperUpdatePriceAndCloseMarket(
       priceSignature,
       bOracleId,
       bCloseQuoteId,
       index,
+      {
+        gasLimit,
+        gasPrice,
+      },
     );
   }
 
   async wrapperCloseLimitMM(
     quote: OpenCloseQuoteSign,
     signHash: string,
+    gasLimit: BigNumberish,
+    gasPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const wrapperCloseLimitMM = this.contracts[
+    return await this.contracts[
       contracts.PionerV1Wrapper.name
-    ].getFunction(contracts.PionerV1Wrapper.functions.wrapperCloseLimitMM);
-    return await wrapperCloseLimitMM.call(null, quote, signHash);
+    ].wrapperCloseLimitMM(quote, signHash, {
+      gasLimit,
+      gasPrice,
+    });
   }
 
   async wrapperOpenTPSLOracleSwap(
@@ -160,14 +157,12 @@ export class BlockchainInterface {
     amountSL: number[],
     limitOrStopSL: number[],
     expirySL: number[],
+    gasLimit: BigNumberish,
+    gasPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const wrapperOpenTPSLOracleSwap = this.contracts[
+    return await this.contracts[
       contracts.PionerV1Wrapper.name
-    ].getFunction(
-      contracts.PionerV1Wrapper.functions.wrapperOpenTPSLOracleSwap,
-    );
-    return await wrapperOpenTPSLOracleSwap.call(
-      null,
+    ].wrapperOpenTPSLOracleSwap(
       isLong,
       price,
       amount,
@@ -198,6 +193,10 @@ export class BlockchainInterface {
       amountSL,
       limitOrStopSL,
       expirySL,
+      {
+        gasLimit,
+        gasPrice,
+      },
     );
   }
 
@@ -207,18 +206,21 @@ export class BlockchainInterface {
     openQuoteSign: OpenQuoteSign,
     openQuoteSignature: string,
     _acceptPrice: BigNumberish,
+    gasLimit: BigNumberish,
+    gasPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const wrapperOpenQuoteMM = this.contracts[
-      contracts.PionerV1Wrapper.name
-    ].getFunction(contracts.PionerV1Wrapper.functions.wrapperOpenQuoteMM);
-
-    return await wrapperOpenQuoteMM.call(
-      null,
+    return await this.contracts[contracts.PionerV1Wrapper.name][
+      contracts.PionerV1Wrapper.functions.wrapperOpenQuoteMM
+    ](
       bOracleSign,
       signaturebOracleSign,
       openQuoteSign,
       openQuoteSignature,
       _acceptPrice,
+      {
+        gasLimit,
+        gasPrice,
+      },
     );
   }
 
@@ -284,34 +286,28 @@ export class BlockchainInterface {
     );
   }
 
-  async estimateGasPrice(): Promise<BigNumberish> {
+  async estimateGasPrice(): Promise<ethers.FeeData | null> {
     const provider = this.contractRunner.provider;
-    if (provider) {
-      const feeData = await provider.getFeeData();
-      const gasPrice = feeData.gasPrice || feeData.maxFeePerGas;
-      if (gasPrice) {
-        return gasPrice;
-      }
+    if (!provider) {
+      return null;
     }
-    const defaultGasPrice = ethers.parseUnits('20', 'gwei');
-    return defaultGasPrice;
+    return await provider.getFeeData();
   }
 
   async estimateGasLimit(
     contractName: ContractKey,
     functionName: string,
-    ...args: any[]
+    ...args: ethers.ContractMethodArgs<any[]>
   ): Promise<BigNumberish> {
     const contract = this.contracts[contractName];
     const contractFunction = contract.getFunction(functionName);
-    const gasLimit = await contractFunction.estimateGas(...args);
-    return gasLimit;
+    return await contractFunction.estimateGas(...args);
   }
 
   async fetchEvent(
     contractName: ContractKey,
-    eventName: string,
-    fromBlock: ethers.BlockTag,
+    eventName: string = '*',
+    fromBlock: ethers.BlockTag = '0',
     toBlock: ethers.BlockTag = 'latest',
   ): Promise<(ethers.EventLog | ethers.Log)[]> {
     const ce = this.contracts[contractName].getEvent(eventName);

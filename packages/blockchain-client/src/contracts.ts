@@ -6,7 +6,6 @@ import { PionerV1Compliance as PionerV1ComplianceContract } from './abis/PionerV
 import { PionerV1Default as PionerV1DefaultContract } from './abis/PionerV1Default';
 import { PionerV1Open as PionerV1OpenContract } from './abis/PionerV1Open';
 import { PionerV1Oracle as PionerV1OracleContract } from './abis/PionerV1Oracle';
-import { PionerV1Utils as PionerV1UtilsContract } from './abis/PionerV1Utils';
 import { PionerV1View as PionerV1ViewContract } from './abis/PionerV1View';
 import { PionerV1Wrapper as PionerV1WrapperContract } from './abis/PionerV1Wrapper';
 import { networks } from './networks';
@@ -22,7 +21,10 @@ export const contracts: Contracts = {
       Approval: 'Approval',
       Transfer: 'Transfer',
     },
-    functions: {},
+    functions: {
+      approve: 'approve',
+      mint: 'mint',
+    },
   },
   PionerV1: {
     name: 'PionerV1',
@@ -73,7 +75,9 @@ export const contracts: Contracts = {
       MigrationRefused: 'MigrationRefused',
       WithdrawEvent: 'WithdrawEvent',
     },
-    functions: {},
+    functions: {
+      deposit: 'deposit',
+    },
   },
   PionerV1Default: {
     name: 'PionerV1Default',
@@ -107,13 +111,6 @@ export const contracts: Contracts = {
     events: {
       deployBContract: 'deployBContract',
     },
-    functions: {},
-  },
-  PionerV1Utils: {
-    name: 'PionerV1Utils',
-    version: '1.0',
-    abi: PionerV1UtilsContract.abi,
-    events: {},
     functions: {},
   },
   PionerV1View: {

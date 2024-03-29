@@ -8,12 +8,11 @@ export type ContractKey =
   | 'PionerV1Default'
   | 'PionerV1Open'
   | 'PionerV1Oracle'
-  | 'PionerV1Utils'
   | 'PionerV1View'
   | 'PionerV1Wrapper';
 
 export interface ContractInfo {
-  name: string;
+  name: ContractKey;
   version: string;
   abi: ethers.InterfaceAbi;
   events: { [key: string]: string };
