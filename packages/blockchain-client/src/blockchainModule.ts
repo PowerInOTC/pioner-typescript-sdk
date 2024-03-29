@@ -227,10 +227,10 @@ export class BlockchainInterface {
     gasLimit: BigNumberish,
     gasPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const mint = this.contracts[contracts.FakeUSD.name].getFunction(
-      contracts.FakeUSD.functions.mint,
-    );
-    return await mint.call(null, amount, { gasLimit, gasPrice });
+    return await this.contracts[contracts.FakeUSD.name].mint(amount, {
+      gasLimit,
+      gasPrice,
+    });
   }
 
   async approve(
@@ -239,10 +239,11 @@ export class BlockchainInterface {
     gasLimit: BigNumberish,
     gasPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const approve = this.contracts[contracts.FakeUSD.name].getFunction(
-      contracts.FakeUSD.functions.approve,
+    return await this.contracts[contracts.FakeUSD.name].approve(
+      spender,
+      amount,
+      { gasLimit, gasPrice },
     );
-    return await approve.call(null, spender, amount, { gasLimit, gasPrice });
   }
 
   async deposit(
@@ -252,13 +253,12 @@ export class BlockchainInterface {
     gasLimit: BigNumberish,
     gasPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const deposit = this.contracts[
-      contracts.PionerV1Compliance.name
-    ].getFunction(contracts.PionerV1Compliance.functions.deposit);
-    return await deposit.call(null, amount, bContractId, user, {
-      gasLimit,
-      gasPrice,
-    });
+    return await this.contracts[contracts.PionerV1Compliance.name].deposit(
+      amount,
+      bContractId,
+      user,
+      { gasLimit, gasPrice },
+    );
   }
 
   async initiateWithdraw(
@@ -266,10 +266,9 @@ export class BlockchainInterface {
     gasLimit: BigNumberish,
     gasPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const initiateWithdraw = this.contracts[
+    return await this.contracts[
       contracts.PionerV1Compliance.name
-    ].getFunction(contracts.PionerV1Compliance.functions.initiateWithdraw);
-    return await initiateWithdraw.call(null, amount, { gasLimit, gasPrice });
+    ].initiateWithdraw(amount, { gasLimit, gasPrice });
   }
 
   async withdraw(
@@ -278,10 +277,11 @@ export class BlockchainInterface {
     gasLimit: BigNumberish,
     gasPrice: BigNumberish,
   ): Promise<TransactionResponse> {
-    const withdraw = this.contracts[
-      contracts.PionerV1Compliance.name
-    ].getFunction(contracts.PionerV1Compliance.functions.withdraw);
-    return await withdraw.call(null, bContractId, user, { gasLimit, gasPrice });
+    return await this.contracts[contracts.PionerV1Compliance.name].withdraw(
+      bContractId,
+      user,
+      { gasLimit, gasPrice },
+    );
   }
 
   async estimateGasPrice(): Promise<BigNumberish> {
