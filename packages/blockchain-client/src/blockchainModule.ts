@@ -79,9 +79,24 @@ export class BlockchainInterface {
     priceSignature: PionSign,
     bOracleId: number,
     bContractId: number,
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
+    gasLimit?: BigNumberish,
+    gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
+    gasLimit =
+      gasLimit ||
+      (await this.estimateGas(
+        contracts.PionerV1Wrapper.name,
+        contracts.PionerV1Wrapper.functions.wrapperUpdatePriceAndDefault,
+        priceSignature,
+        bOracleId,
+        bContractId,
+      ));
+    gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
+
+    if (!gasLimit || !gasPrice) {
+      throw new Error('Failed to estimate gas limit or gas price.');
+    }
+
     return await this.contracts[
       contracts.PionerV1Wrapper.name
     ].wrapperUpdatePriceAndDefault(priceSignature, bOracleId, bContractId, {
@@ -95,9 +110,25 @@ export class BlockchainInterface {
     bOracleId: number,
     bCloseQuoteId: number,
     index: number,
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
+    gasLimit?: BigNumberish,
+    gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
+    gasLimit =
+      gasLimit ||
+      (await this.estimateGas(
+        contracts.PionerV1Wrapper.name,
+        contracts.PionerV1Wrapper.functions.wrapperUpdatePriceAndCloseMarket,
+        priceSignature,
+        bOracleId,
+        bCloseQuoteId,
+        index,
+      ));
+    gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
+
+    if (!gasLimit || !gasPrice) {
+      throw new Error('Failed to estimate gas limit or gas price.');
+    }
+
     return await this.contracts[
       contracts.PionerV1Wrapper.name
     ].wrapperUpdatePriceAndCloseMarket(
@@ -115,9 +146,23 @@ export class BlockchainInterface {
   async wrapperCloseLimitMM(
     quote: OpenCloseQuoteSign,
     signHash: string,
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
+    gasLimit?: BigNumberish,
+    gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
+    gasLimit =
+      gasLimit ||
+      (await this.estimateGas(
+        contracts.PionerV1Wrapper.name,
+        contracts.PionerV1Wrapper.functions.wrapperCloseLimitMM,
+        quote,
+        signHash,
+      ));
+    gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
+
+    if (!gasLimit || !gasPrice) {
+      throw new Error('Failed to estimate gas limit or gas price.');
+    }
+
     return await this.contracts[
       contracts.PionerV1Wrapper.name
     ].wrapperCloseLimitMM(quote, signHash, {
@@ -134,19 +179,19 @@ export class BlockchainInterface {
     isAPayingAPR: boolean,
     frontEnd: string,
     affiliate: string,
-    _assetHex: string,
-    _x: number,
-    _parity: number,
-    _maxConfidence: number,
-    _maxDelay: number,
+    assetHex: string,
+    x: number,
+    parity: number,
+    maxConfidence: number,
+    maxDelay: number,
     precision: number,
-    _imA: number,
-    _imB: number,
-    _dfA: number,
-    _dfB: number,
-    _expiryA: number,
-    _expiryB: number,
-    _timeLock: number,
+    imA: number,
+    imB: number,
+    dfA: number,
+    dfB: number,
+    expiryA: number,
+    expiryB: number,
+    timeLock: number,
     bContractIdsTP: number[],
     priceTP: number[],
     amountTP: number[],
@@ -157,9 +202,51 @@ export class BlockchainInterface {
     amountSL: number[],
     limitOrStopSL: number[],
     expirySL: number[],
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
+    gasLimit?: BigNumberish,
+    gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
+    gasLimit =
+      gasLimit ||
+      (await this.estimateGas(
+        contracts.PionerV1Wrapper.name,
+        contracts.PionerV1Wrapper.functions.wrapperOpenTPSLOracleSwap,
+        isLong,
+        price,
+        amount,
+        interestRate,
+        isAPayingAPR,
+        frontEnd,
+        affiliate,
+        assetHex,
+        x,
+        parity,
+        maxConfidence,
+        maxDelay,
+        precision,
+        imA,
+        imB,
+        dfA,
+        dfB,
+        expiryA,
+        expiryB,
+        timeLock,
+        bContractIdsTP,
+        priceTP,
+        amountTP,
+        limitOrStopTP,
+        expiryTP,
+        bContractIdsSL,
+        priceSL,
+        amountSL,
+        limitOrStopSL,
+        expirySL,
+      ));
+    gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
+
+    if (!gasLimit || !gasPrice) {
+      throw new Error('Failed to estimate gas limit or gas price.');
+    }
+
     return await this.contracts[
       contracts.PionerV1Wrapper.name
     ].wrapperOpenTPSLOracleSwap(
@@ -170,19 +257,19 @@ export class BlockchainInterface {
       isAPayingAPR,
       frontEnd,
       affiliate,
-      _assetHex,
-      _x,
-      _parity,
-      _maxConfidence,
-      _maxDelay,
+      assetHex,
+      x,
+      parity,
+      maxConfidence,
+      maxDelay,
       precision,
-      _imA,
-      _imB,
-      _dfA,
-      _dfB,
-      _expiryA,
-      _expiryB,
-      _timeLock,
+      imA,
+      imB,
+      dfA,
+      dfB,
+      expiryA,
+      expiryB,
+      timeLock,
       bContractIdsTP,
       priceTP,
       amountTP,
@@ -205,10 +292,27 @@ export class BlockchainInterface {
     signaturebOracleSign: string,
     openQuoteSign: OpenQuoteSign,
     openQuoteSignature: string,
-    _acceptPrice: BigNumberish,
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
+    acceptPrice: BigNumberish,
+    gasLimit?: BigNumberish,
+    gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
+    gasLimit =
+      gasLimit ||
+      (await this.estimateGas(
+        contracts.PionerV1Wrapper.name,
+        contracts.PionerV1Wrapper.functions.wrapperOpenQuoteMM,
+        bOracleSign,
+        signaturebOracleSign,
+        openQuoteSign,
+        openQuoteSignature,
+        acceptPrice,
+      ));
+    gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
+
+    if (!gasLimit || !gasPrice) {
+      throw new Error('Failed to estimate gas limit or gas price.');
+    }
+
     return await this.contracts[contracts.PionerV1Wrapper.name][
       contracts.PionerV1Wrapper.functions.wrapperOpenQuoteMM
     ](
@@ -216,7 +320,7 @@ export class BlockchainInterface {
       signaturebOracleSign,
       openQuoteSign,
       openQuoteSignature,
-      _acceptPrice,
+      acceptPrice,
       {
         gasLimit,
         gasPrice,
@@ -226,9 +330,22 @@ export class BlockchainInterface {
 
   async mint(
     amount: BigNumberish,
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
+    gasLimit?: BigNumberish,
+    gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
+    gasLimit =
+      gasLimit ||
+      (await this.estimateGas(
+        contracts.FakeUSD.name,
+        contracts.FakeUSD.functions.mint,
+        amount,
+      ));
+    gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
+
+    if (!gasLimit || !gasPrice) {
+      throw new Error('Failed to estimate gas limit or gas price.');
+    }
+
     return await this.contracts[contracts.FakeUSD.name].mint(amount, {
       gasLimit,
       gasPrice,
@@ -238,9 +355,23 @@ export class BlockchainInterface {
   async approve(
     spender: string,
     amount: BigNumberish,
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
+    gasLimit?: BigNumberish,
+    gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
+    gasLimit =
+      gasLimit ||
+      (await this.estimateGas(
+        contracts.FakeUSD.name,
+        contracts.FakeUSD.functions.approve,
+        spender,
+        amount,
+      ));
+    gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
+
+    if (!gasLimit || !gasPrice) {
+      throw new Error('Failed to estimate gas limit or gas price.');
+    }
+
     return await this.contracts[contracts.FakeUSD.name].approve(
       spender,
       amount,
@@ -251,37 +382,76 @@ export class BlockchainInterface {
   async deposit(
     amount: BigNumberish,
     bContractId: number,
-    user: string,
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
+    address: string,
+    gasLimit?: BigNumberish,
+    gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
+    gasLimit =
+      gasLimit ||
+      (await this.estimateGas(
+        contracts.PionerV1Compliance.name,
+        contracts.PionerV1Compliance.functions.deposit,
+        amount,
+        bContractId,
+        address,
+      ));
+    gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
+
+    if (!gasLimit || !gasPrice) {
+      throw new Error('Failed to estimate gas limit or gas price.');
+    }
+
     return await this.contracts[contracts.PionerV1Compliance.name].deposit(
       amount,
       bContractId,
-      user,
+      address,
       { gasLimit, gasPrice },
     );
   }
 
   async initiateWithdraw(
     amount: BigNumberish,
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
+    gasLimit?: BigNumberish,
+    gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
+    gasLimit =
+      gasLimit ||
+      (await this.estimateGas(
+        contracts.PionerV1Compliance.name,
+        contracts.PionerV1Compliance.functions.initiateWithdraw,
+        amount,
+      ));
+    gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
+
+    if (!gasLimit || !gasPrice) {
+      throw new Error('Failed to estimate gas limit or gas price.');
+    }
+
     return await this.contracts[
       contracts.PionerV1Compliance.name
     ].initiateWithdraw(amount, { gasLimit, gasPrice });
   }
 
   async withdraw(
-    bContractId: number,
-    user: string,
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
+    amount: BigNumberish,
+    gasLimit?: BigNumberish,
+    gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
+    gasLimit =
+      gasLimit ||
+      (await this.estimateGas(
+        contracts.PionerV1Compliance.name,
+        contracts.PionerV1Compliance.functions.withdraw,
+        amount,
+      ));
+    gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
+
+    if (!gasLimit || !gasPrice) {
+      throw new Error('Failed to estimate gas limit or gas price.');
+    }
+
     return await this.contracts[contracts.PionerV1Compliance.name].withdraw(
-      bContractId,
-      user,
+      amount,
       { gasLimit, gasPrice },
     );
   }
@@ -294,7 +464,7 @@ export class BlockchainInterface {
     return await provider.getFeeData();
   }
 
-  async estimateGasLimit(
+  async estimateGas(
     contractName: ContractKey,
     functionName: string,
     ...args: ethers.ContractMethodArgs<any[]>

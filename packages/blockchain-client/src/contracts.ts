@@ -77,6 +77,8 @@ export const contracts: Contracts = {
     },
     functions: {
       deposit: 'deposit',
+      withdraw: 'withdraw',
+      initiateWithdraw: 'initiateWithdraw',
     },
   },
   PionerV1Default: {
