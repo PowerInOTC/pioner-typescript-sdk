@@ -77,8 +77,8 @@ export class BlockchainInterface {
 
   async wrapperUpdatePriceAndDefault(
     priceSignature: PionSign,
-    bOracleId: number,
-    bContractId: number,
+    bOracleId: BigNumberish,
+    bContractId: BigNumberish,
     gasLimit?: BigNumberish,
     gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
@@ -107,9 +107,9 @@ export class BlockchainInterface {
 
   async wrapperUpdatePriceAndCloseMarket(
     priceSignature: PionSign,
-    bOracleId: number,
-    bCloseQuoteId: number,
-    index: number,
+    bOracleId: BigNumberish,
+    bCloseQuoteId: BigNumberish,
+    index: BigNumberish,
     gasLimit?: BigNumberish,
     gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
@@ -173,35 +173,35 @@ export class BlockchainInterface {
 
   async wrapperOpenTPSLOracleSwap(
     isLong: boolean,
-    price: number,
-    amount: number,
-    interestRate: number,
+    price: BigNumberish,
+    amount: BigNumberish,
+    interestRate: BigNumberish,
     isAPayingAPR: boolean,
     frontEnd: string,
     affiliate: string,
     assetHex: string,
-    x: number,
+    x: BigNumberish,
     parity: number,
-    maxConfidence: number,
-    maxDelay: number,
-    precision: number,
-    imA: number,
-    imB: number,
-    dfA: number,
-    dfB: number,
-    expiryA: number,
-    expiryB: number,
-    timeLock: number,
-    bContractIdsTP: number[],
-    priceTP: number[],
-    amountTP: number[],
-    limitOrStopTP: number[],
-    expiryTP: number[],
-    bContractIdsSL: number[],
-    priceSL: number[],
-    amountSL: number[],
-    limitOrStopSL: number[],
-    expirySL: number[],
+    maxConfidence: BigNumberish,
+    maxDelay: BigNumberish,
+    precision: BigNumberish,
+    imA: BigNumberish,
+    imB: BigNumberish,
+    dfA: BigNumberish,
+    dfB: BigNumberish,
+    expiryA: BigNumberish,
+    expiryB: BigNumberish,
+    timeLock: BigNumberish,
+    bContractIdsTP: BigNumberish[],
+    priceTP: BigNumberish[],
+    amountTP: BigNumberish[],
+    limitOrStopTP: BigNumberish[],
+    expiryTP: BigNumberish[],
+    bContractIdsSL: BigNumberish[],
+    priceSL: BigNumberish[],
+    amountSL: BigNumberish[],
+    limitOrStopSL: BigNumberish[],
+    expirySL: BigNumberish[],
     gasLimit?: BigNumberish,
     gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
@@ -381,8 +381,8 @@ export class BlockchainInterface {
 
   async deposit(
     amount: BigNumberish,
-    bContractId: number,
-    address: string,
+    bContractId: BigNumberish,
+    user: string,
     gasLimit?: BigNumberish,
     gasPrice?: BigNumberish,
   ): Promise<TransactionResponse> {
@@ -393,7 +393,7 @@ export class BlockchainInterface {
         contracts.PionerV1Compliance.functions.deposit,
         amount,
         bContractId,
-        address,
+        user,
       ));
     gasPrice = gasPrice || (await this.estimateGasPrice())?.maxFeePerGas || 0;
 
@@ -404,7 +404,7 @@ export class BlockchainInterface {
     return await this.contracts[contracts.PionerV1Compliance.name].deposit(
       amount,
       bContractId,
-      address,
+      user,
       { gasLimit, gasPrice },
     );
   }
@@ -454,6 +454,50 @@ export class BlockchainInterface {
       amount,
       { gasLimit, gasPrice },
     );
+  }
+
+  async getCloseQuote(
+    closeQuoteId: BigNumberish,
+  ): Promise<TransactionResponse> {
+    return await this.contracts[contracts.PionerV1View.name].getCloseQuote(
+      closeQuoteId,
+    );
+  }
+
+  async getContract(contractId: BigNumberish): Promise<TransactionResponse> {
+    return await this.contracts[contracts.PionerV1View.name].getContract(
+      contractId,
+    );
+  }
+
+  async getKycData(
+    user: string,
+    counterparty: string,
+  ): Promise<TransactionResponse> {
+    return await this.contracts[contracts.PionerV1View.name].getKycData(
+      user,
+      counterparty,
+    );
+  }
+
+  async getOracle(oracleId: BigNumberish): Promise<TransactionResponse> {
+    return await this.contracts[contracts.PionerV1View.name].getOracle(
+      oracleId,
+    );
+  }
+
+  async getUserRelatedInfo(
+    user: string,
+    counterparty: string,
+  ): Promise<TransactionResponse> {
+    return await this.contracts[contracts.PionerV1View.name].getUserRelatedInfo(
+      user,
+      counterparty,
+    );
+  }
+
+  async getBalance(user: string): Promise<TransactionResponse> {
+    return await this.contracts[contracts.PionerV1.name].getBalance(user);
   }
 
   async estimateGasPrice(): Promise<ethers.FeeData | null> {

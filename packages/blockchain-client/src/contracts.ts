@@ -38,7 +38,9 @@ export const contracts: Contracts = {
       PayOwedEvent: 'PayOwedEvent',
       updatePricePythEvent: 'updatePricePythEvent',
     },
-    functions: {},
+    functions: {
+      getBalance: 'getBalance',
+    },
   },
   PionerV1Close: {
     name: 'PionerV1Close',
@@ -120,7 +122,13 @@ export const contracts: Contracts = {
     version: '1.0',
     abi: PionerV1ViewContract.abi,
     events: {},
-    functions: {},
+    functions: {
+      getCloseQuote: 'getCloseQuote',
+      getContract: 'getContract',
+      getKycData: 'getKycData',
+      getOracle: 'getOracle',
+      getUserRelatedInfo: 'getUserRelatedInfo',
+    },
   },
   PionerV1Wrapper: {
     name: 'PionerV1Wrapper',

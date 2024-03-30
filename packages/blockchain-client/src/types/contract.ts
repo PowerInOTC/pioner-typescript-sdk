@@ -66,25 +66,104 @@ export interface OpenQuoteSign {
 }
 
 export interface PionSign {
-  appId: number;
+  appId: BigNumberish;
   reqId: string;
   requestassetHex: string;
-  requestPairBid: number;
-  requestPairAsk: number;
-  requestConfidence: number;
-  requestSignTime: number;
-  requestPrecision: number;
-  signature: number;
+  requestPairBid: BigNumberish;
+  requestPairAsk: BigNumberish;
+  requestConfidence: BigNumberish;
+  requestSignTime: BigNumberish;
+  requestPrecision: BigNumberish;
+  signature: BigNumberish;
   owner: string;
   nonce: string;
 }
 
 export interface OpenCloseQuoteSign {
-  bContractId: number;
-  price: number;
-  amount: number;
-  limitOrStop: number;
-  expiry: number;
+  bContractId: BigNumberish;
+  price: BigNumberish;
+  amount: BigNumberish;
+  limitOrStop: BigNumberish;
+  expiry: BigNumberish;
   authorized: string;
-  nonce: number;
+  nonce: BigNumberish;
 }
+
+export type BOracle = {
+  assetHex: string;
+  oracleType: BigNumberish;
+  lastBid: BigNumberish;
+  lastAsk: BigNumberish;
+  publicOracleAddress: string;
+  maxConfidence: BigNumberish;
+  x: BigNumberish;
+  parity: number;
+  maxDelay: BigNumberish;
+  lastPrice: BigNumberish;
+  lastPriceUpdateTime: BigNumberish;
+  imA: BigNumberish;
+  imB: BigNumberish;
+  dfA: BigNumberish;
+  dfB: BigNumberish;
+  expiryA: BigNumberish;
+  expiryB: BigNumberish;
+  timeLock: BigNumberish;
+  cType: BigNumberish;
+  forceCloseType: BigNumberish;
+  kycAddress: string;
+  isPaused: boolean;
+  deployTime: BigNumberish;
+};
+
+export type BContract = {
+  pA: string;
+  pB: string;
+  oracleId: BigNumberish;
+  initiator: string;
+  price: BigNumberish;
+  amount: BigNumberish;
+  interestRate: BigNumberish;
+  isAPayingAPR: boolean;
+  openTime: BigNumberish;
+  state: BigNumberish;
+  frontEnd: string;
+  hedger: string;
+  affiliate: string;
+  cancelTime: BigNumberish;
+};
+
+export type BCloseQuote = {
+  bContractIds: BigNumberish[];
+  price: BigNumberish[];
+  amount: BigNumberish[];
+  limitOrStop: BigNumberish[];
+  expiry: BigNumberish[];
+  initiator: string;
+  cancelTime: BigNumberish;
+  openTime: BigNumberish;
+  state: BigNumberish;
+};
+
+export type UserRelatedInfo = {
+  openPositionNumber: BigNumberish;
+  owedAmount: BigNumberish;
+  totalOwedAmount: BigNumberish;
+  totalOwedAmountPaid: BigNumberish;
+  gracePeriodLockedWithdrawBalance: BigNumberish;
+  gracePeriodLockedTime: BigNumberish;
+  minimumOpenPartialFillNotional: BigNumberish;
+  sponsorReward: BigNumberish;
+  oracleLength: BigNumberish;
+  contractLength: BigNumberish;
+  closeQuoteLength: BigNumberish;
+};
+
+export type KycData = {
+  waitingKyc: boolean;
+  kycLinkedAddress: string;
+  kycType: BigNumberish;
+  maxPosition: BigNumberish;
+  nextMaxPosition: BigNumberish;
+  lastKycUpdate: BigNumberish;
+  isKycPaused: boolean;
+};
