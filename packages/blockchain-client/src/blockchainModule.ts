@@ -19,7 +19,7 @@ import { NetworkKey } from './types/network';
 export class BlockchainInterface {
   public networkKey: NetworkKey;
   public contracts: { [contractName: string]: ethers.Contract };
-  private contractRunner: ethers.ContractRunner;
+  public contractRunner: ethers.ContractRunner;
 
   constructor(network: NetworkKey, contractRunner: ethers.ContractRunner) {
     this.networkKey = network;
@@ -524,10 +524,13 @@ export class BlockchainInterface {
   async fetchEvent(
     contractName: ContractKey,
     eventName: string = '*',
-    fromBlock: ethers.BlockTag = '0',
+    fromBlock: ethers.BlockTag = 'earliest',
     toBlock: ethers.BlockTag = 'latest',
   ): Promise<(ethers.EventLog | ethers.Log)[]> {
-    const ce = this.contracts[contractName].getEvent(eventName);
+    let ce: string | ethers.ContractEvent<any[]> = eventName;
+    if (eventName !== '*') {
+      ce = this.contracts[contractName].getEvent(eventName);
+    }
 
     return await this.contracts[contractName].queryFilter(
       ce,
