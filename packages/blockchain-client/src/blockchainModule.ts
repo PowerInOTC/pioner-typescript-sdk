@@ -6,16 +6,24 @@ import {
   PionSign,
   OpenCloseQuoteSign,
   ContractKey,
+  BOracle,
+  BContract,
+  BCloseQuote,
+  UserRelatedInfo,
+  KycData,
 } from './types/contract';
 import { BigNumberish } from 'ethers';
 import { networks } from './networks';
 import { NetworkKey } from './types/network';
 
 export class BlockchainInterface {
-  private contracts: { [contractName: string]: ethers.Contract };
+  public networkKey: NetworkKey;
+  public contracts: { [contractName: string]: ethers.Contract };
   private contractRunner: ethers.ContractRunner;
 
   constructor(network: NetworkKey, contractRunner: ethers.ContractRunner) {
+    this.networkKey = network;
+
     this.contractRunner = contractRunner;
 
     this.contracts = {};
@@ -456,31 +464,26 @@ export class BlockchainInterface {
     );
   }
 
-  async getCloseQuote(
-    closeQuoteId: BigNumberish,
-  ): Promise<TransactionResponse> {
+  async getCloseQuote(closeQuoteId: BigNumberish): Promise<BCloseQuote> {
     return await this.contracts[contracts.PionerV1View.name].getCloseQuote(
       closeQuoteId,
     );
   }
 
-  async getContract(contractId: BigNumberish): Promise<TransactionResponse> {
+  async getContract(contractId: BigNumberish): Promise<BContract> {
     return await this.contracts[contracts.PionerV1View.name].getContract(
       contractId,
     );
   }
 
-  async getKycData(
-    user: string,
-    counterparty: string,
-  ): Promise<TransactionResponse> {
+  async getKycData(user: string, counterparty: string): Promise<KycData> {
     return await this.contracts[contracts.PionerV1View.name].getKycData(
       user,
       counterparty,
     );
   }
 
-  async getOracle(oracleId: BigNumberish): Promise<TransactionResponse> {
+  async getOracle(oracleId: BigNumberish): Promise<BOracle> {
     return await this.contracts[contracts.PionerV1View.name].getOracle(
       oracleId,
     );
@@ -489,14 +492,14 @@ export class BlockchainInterface {
   async getUserRelatedInfo(
     user: string,
     counterparty: string,
-  ): Promise<TransactionResponse> {
+  ): Promise<UserRelatedInfo> {
     return await this.contracts[contracts.PionerV1View.name].getUserRelatedInfo(
       user,
       counterparty,
     );
   }
 
-  async getBalance(user: string): Promise<TransactionResponse> {
+  async getBalance(user: string): Promise<bigint> {
     return await this.contracts[contracts.PionerV1.name].getBalance(user);
   }
 

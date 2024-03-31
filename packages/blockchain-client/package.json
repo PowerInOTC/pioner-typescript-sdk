@@ -27,5 +27,5 @@
   "peerDependencies": {
     "@types/node": "^20.11.25"
   },
-  "gitHead": "ba216bef3ce9f1fc903970ba682a04f6a7f563da"
+  "gitHead": "162d28c052568c3d64b7566a244b8c3fd5f51015"
 }
