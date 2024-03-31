@@ -97,7 +97,7 @@ export type BOracle = {
   publicOracleAddress: string;
   maxConfidence: bigint;
   x: bigint;
-  parity: number;
+  parity: bigint;
   maxDelay: bigint;
   lastPrice: bigint;
   lastPriceUpdateTime: bigint;
