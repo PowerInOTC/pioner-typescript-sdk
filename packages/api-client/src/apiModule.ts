@@ -1,7 +1,25 @@
 import ethers from 'ethers';
 import axios, { AxiosResponse } from 'axios';
 import { config } from './config';
-import { QuoteRequest, RfqRequest } from './types/requests';
+import {
+  QuoteRequest,
+  RfqRequest,
+  SignedCancelCloseQuoteRequest,
+  SignedCancelOpenQuoteRequest,
+  SignedCloseQuoteRequest,
+  SignedFillOpenQuoteRequest,
+  SignedWrappedOpenQuoteRequest,
+} from './types/requests';
+import {
+  PricesResponse,
+  QuoteResponse,
+  RfqResponse,
+  signedCancelCloseQuoteResponse,
+  signedCancelOpenQuoteResponse,
+  signedCloseQuoteResponse,
+  signedFillOpenQuoteResponse,
+  signedWrappedOpenQuoteResponse,
+} from './types/responses';
 
 const protocol: string = config.https ? 'https' : 'http';
 const serverAddress = config.serverAddress;
@@ -11,9 +29,9 @@ export async function getPrices(
   symbols: string[],
   token: string,
   timeout: number = 3000,
-): Promise<AxiosResponse | undefined> {
+): Promise<AxiosResponse<PricesResponse> | undefined> {
   let url = `${protocol}://${serverAddress}:${serverPort}/api/v1/get_prices`;
-  url += '?' + symbols.map((symbol) => `ids[]=${symbol}`).join('&');
+  url += '?ids=' + symbols.join(',');
 
   return await axios.get(url, {
     headers: {
@@ -27,7 +45,7 @@ export async function sendRfq(
   rfq: RfqRequest,
   token: string,
   timeout: number = 3000,
-): Promise<AxiosResponse | undefined> {
+): Promise<AxiosResponse<RfqResponse> | undefined> {
   return await axios.post(
     `${protocol}://${serverAddress}:${serverPort}/api/v1/submit_rfq`,
     rfq,
@@ -41,18 +59,36 @@ export async function sendRfq(
 }
 
 export async function getRfqs(
+  id: string | undefined = undefined,
+  start: number | undefined = undefined,
+  end: number | undefined = undefined,
   token: string,
-  start?: number,
-  end?: number,
   timeout: number = 3000,
-): Promise<AxiosResponse | undefined> {
+): Promise<AxiosResponse<RfqResponse[]> | undefined> {
   return await axios.get(
     `${protocol}://${serverAddress}:${serverPort}/api/v1/get_rfqs`,
     {
       headers: {
         Authorization: token,
       },
-      params: { start: start, end: end },
+      params: { id: id, start: start, end: end },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function sendQuote(
+  quote: QuoteRequest,
+  token: string,
+  timeout: number = 3000,
+): Promise<AxiosResponse<QuoteResponse> | undefined> {
+  return await axios.post(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/submit_quote`,
+    quote,
+    {
+      headers: {
+        Authorization: token,
+      },
       timeout: timeout,
     },
   );
@@ -60,11 +96,11 @@ export async function getRfqs(
 
 export async function getQuotes(
   rfqId: string,
+  start: number | undefined = undefined,
+  end: number | undefined = undefined,
   token: string,
-  start?: number,
-  end?: number,
   timeout: number = 3000,
-): Promise<AxiosResponse | undefined> {
+): Promise<AxiosResponse<QuoteResponse[]> | undefined> {
   return await axios.get(
     `${protocol}://${serverAddress}:${serverPort}/api/v1/get_quotes`,
     {
@@ -81,15 +117,238 @@ export async function getQuotes(
   );
 }
 
-export async function sendQuote(
-  quote: QuoteRequest,
+export async function sendSignedWrappedOpenQuote(
+  quote: SignedWrappedOpenQuoteRequest,
   token: string,
   timeout: number = 3000,
-): Promise<AxiosResponse | undefined> {
+): Promise<AxiosResponse<signedWrappedOpenQuoteResponse> | undefined> {
   return await axios.post(
-    `${protocol}://${serverAddress}:${serverPort}/api/v1/submit_quote`,
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/submit_signed_wrapped_open_quote`,
     quote,
     {
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function getSignedWrappedOpenQuotes(
+  version: string,
+  chainId: number,
+  onlyActive: boolean | undefined = undefined,
+  start: number | undefined = undefined,
+  end: number | undefined = undefined,
+  issuerAddress: string | undefined = undefined,
+  targetAddress: string | undefined = undefined,
+  token: string,
+  timeout: number = 3000,
+): Promise<AxiosResponse<signedWrappedOpenQuoteResponse[]> | undefined> {
+  return await axios.get(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/get_signed_wrapped_open_quote`,
+    {
+      params: {
+        version: version,
+        chainId: chainId,
+        onlyActive: onlyActive,
+        start: start,
+        end: end,
+        issuerAddress: issuerAddress,
+        targetAddress: targetAddress,
+      },
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function sendSignedFillOpenQuote(
+  quote: SignedFillOpenQuoteRequest,
+  token: string,
+  timeout: number = 3000,
+): Promise<AxiosResponse<signedFillOpenQuoteResponse> | undefined> {
+  return await axios.post(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/submit_signed_fill_open_quote`,
+    quote,
+    {
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function getSignedFillOpenQuotes(
+  version: string,
+  chainId: number,
+  onlyActive: boolean | undefined = undefined,
+  start: number | undefined = undefined,
+  end: number | undefined = undefined,
+  issuerAddress: string | undefined = undefined,
+  targetAddress: string | undefined = undefined,
+  token: string,
+  timeout: number = 3000,
+): Promise<AxiosResponse<signedFillOpenQuoteResponse[]> | undefined> {
+  return await axios.get(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/get_signed_fill_open_quote`,
+    {
+      params: {
+        version: version,
+        chainId: chainId,
+        onlyActive: onlyActive,
+        start: start,
+        end: end,
+        issuerAddress: issuerAddress,
+        targetAddress: targetAddress,
+      },
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function sendSignedCancelOpenQuote(
+  quote: SignedCancelOpenQuoteRequest,
+  token: string,
+  timeout: number = 3000,
+): Promise<AxiosResponse<signedCancelOpenQuoteResponse> | undefined> {
+  return await axios.post(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/submit_signed_cancel_open_quote`,
+    quote,
+    {
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function getSignedCancelOpenQuotes(
+  version: string,
+  chainId: number,
+  onlyActive: boolean | undefined = undefined,
+  start: number | undefined = undefined,
+  end: number | undefined = undefined,
+  issuerAddress: string | undefined = undefined,
+  targetAddress: string | undefined = undefined,
+  token: string,
+  timeout: number = 3000,
+): Promise<AxiosResponse<signedCancelOpenQuoteResponse[]> | undefined> {
+  return await axios.get(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/get_signed_cancel_open_quote`,
+    {
+      params: {
+        version: version,
+        chainId: chainId,
+        onlyActive: onlyActive,
+        start: start,
+        end: end,
+        issuerAddress: issuerAddress,
+        targetAddress: targetAddress,
+      },
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function sendSignedCloseQuote(
+  quote: SignedCloseQuoteRequest,
+  token: string,
+  timeout: number = 3000,
+): Promise<AxiosResponse<signedCloseQuoteResponse> | undefined> {
+  return await axios.post(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/submit_signed_close_quote`,
+    quote,
+    {
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function getSignedCloseQuotes(
+  version: string,
+  chainId: number,
+  onlyActive: boolean | undefined = undefined,
+  start: number | undefined = undefined,
+  end: number | undefined = undefined,
+  issuerAddress: string | undefined = undefined,
+  targetAddress: string | undefined = undefined,
+  token: string,
+  timeout: number = 3000,
+): Promise<AxiosResponse<signedCloseQuoteResponse[]> | undefined> {
+  return await axios.get(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/get_signed_close_quote`,
+    {
+      params: {
+        version: version,
+        chainId: chainId,
+        onlyActive: onlyActive,
+        start: start,
+        end: end,
+        issuerAddress: issuerAddress,
+        targetAddress: targetAddress,
+      },
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function sendSignedCancelCloseQuote(
+  quote: SignedCancelCloseQuoteRequest,
+  token: string,
+  timeout: number = 3000,
+): Promise<AxiosResponse<signedCancelCloseQuoteResponse> | undefined> {
+  return await axios.post(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/submit_signed_cancel_close_quote`,
+    quote,
+    {
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function getSignedCancelCloseQuotes(
+  version: string,
+  chainId: number,
+  onlyActive: boolean | undefined = undefined,
+  start: number | undefined = undefined,
+  end: number | undefined = undefined,
+  issuerAddress: string | undefined = undefined,
+  targetAddress: string | undefined = undefined,
+  token: string,
+  timeout: number = 3000,
+): Promise<AxiosResponse<signedCancelCloseQuoteResponse[]> | undefined> {
+  return await axios.get(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/get_signed_cancel_close_quote`,
+    {
+      params: {
+        version: version,
+        chainId: chainId,
+        onlyActive: onlyActive,
+        start: start,
+        end: end,
+        issuerAddress: issuerAddress,
+        targetAddress: targetAddress,
+      },
       headers: {
         Authorization: token,
       },
@@ -101,7 +360,7 @@ export async function sendQuote(
 export async function logout(
   token: string,
   timeout: number = 3000,
-): Promise<AxiosResponse | undefined> {
+): Promise<AxiosResponse<{ message: string }> | undefined> {
   return await axios.post(
     `${protocol}://${serverAddress}:${serverPort}/api/v1/logout`,
     null,
@@ -117,7 +376,7 @@ export async function logout(
 export async function getPayload(
   address: string,
   timeout: number = 3000,
-): Promise<AxiosResponse | undefined> {
+): Promise<AxiosResponse<{ uuid: string; message: string }> | undefined> {
   return await axios.get(
     `${protocol}://${serverAddress}:${serverPort}/api/v1/payload`,
     {
@@ -130,7 +389,7 @@ export async function getPayload(
 export async function login(
   uuid: string,
   signedMessage: string,
-): Promise<AxiosResponse | undefined> {
+): Promise<AxiosResponse<{ token: string }> | undefined> {
   return await axios.post(
     `${protocol}://${serverAddress}:${serverPort}/api/v1/login`,
     { uuid: uuid, signedMessage: signedMessage },
