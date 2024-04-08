@@ -1,6 +1,6 @@
 export interface RfqRequest {
   chainId: number;
-  expiration: bigint;
+  expiration: string;
   assetAId: string;
   assetBId: string;
   sPrice: string;
@@ -11,10 +11,10 @@ export interface RfqRequest {
   sImB: string;
   sDfA: string;
   sDfB: string;
-  sExpirationA: bigint;
-  sExpirationB: bigint;
-  sTimelockA: bigint;
-  sTimelockB: bigint;
+  sExpirationA: string;
+  sExpirationB: string;
+  sTimelockA: string;
+  sTimelockB: string;
   lPrice: string;
   lQuantity: string;
   lInterestRate: string;
@@ -23,16 +23,16 @@ export interface RfqRequest {
   lImB: string;
   lDfA: string;
   lDfB: string;
-  lExpirationA: bigint;
-  lExpirationB: bigint;
-  lTimelockA: bigint;
-  lTimelockB: bigint;
+  lExpirationA: string;
+  lExpirationB: string;
+  lTimelockA: string;
+  lTimelockB: string;
 }
 
 export interface QuoteRequest {
   chainId: number;
   rfqId: string;
-  expiration: bigint;
+  expiration: string;
   sMarketPrice: string;
   sPrice: string;
   sQuantity: string;
@@ -51,15 +51,15 @@ export interface SignedWrappedOpenQuoteRequest {
   parity: boolean;
   maxConfidence: string;
   assetHex: string;
-  maxDelay: bigint;
+  maxDelay: string;
   precision: number;
   imA: string;
   imB: string;
   dfA: string;
   dfB: string;
-  expiryA: bigint;
-  expiryB: bigint;
-  timeLock: bigint;
+  expiryA: string;
+  expiryB: string;
+  timeLock: string;
   nonceBoracle: number;
   signatureBoracle: string;
   isLong: boolean;
@@ -73,7 +73,7 @@ export interface SignedWrappedOpenQuoteRequest {
   authorized: string;
   nonceOpenQuote: number;
   signatureOpenQuote: string;
-  emitTime: bigint;
+  emitTime: string;
   messageState: number;
 }
 
@@ -90,7 +90,7 @@ export interface SignedFillOpenQuoteRequest {
   amount: string;
   nonceAcceptQuote: number;
   signatureAcceptQuote: string;
-  emitTime: bigint;
+  emitTime: string;
   messageState: number;
 }
 
@@ -103,7 +103,7 @@ export interface SignedCancelOpenQuoteRequest {
   targetHash: string;
   nonceCancel: number;
   signatureCancel: string;
-  emitTime: bigint;
+  emitTime: string;
   messageState: number;
 }
 
@@ -117,11 +117,11 @@ export interface SignedCloseQuoteRequest {
   price: string;
   amount: string;
   limitOrStop: number;
-  expiry: bigint;
+  expiry: string;
   authorized: string;
   nonce: number;
   signatureClose: string;
-  emitTime: bigint;
+  emitTime: string;
   messageState: number;
 }
 
@@ -134,6 +134,6 @@ export interface SignedCancelCloseQuoteRequest {
   targetHash: string;
   nonceCancel: number;
   signature: string;
-  emitTime: bigint;
+  emitTime: string;
   messageState: number;
 }
