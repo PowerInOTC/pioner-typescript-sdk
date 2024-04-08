@@ -1,10 +1,10 @@
 export interface RfqResponse {
   id: string;
   chainId: number;
-  createdAt: number;
+  createdAt: bigint;
   userId: string;
   userAddress: string;
-  expiration: number;
+  expiration: bigint;
   assetAId: string;
   assetBId: string;
   sPrice: string;
@@ -15,10 +15,10 @@ export interface RfqResponse {
   sImB: string;
   sDfA: string;
   sDfB: string;
-  sExpirationA: number;
-  sExpirationB: number;
-  sTimelockA: number;
-  sTimelockB: number;
+  sExpirationA: bigint;
+  sExpirationB: bigint;
+  sTimelockA: bigint;
+  sTimelockB: bigint;
   lPrice: string;
   lQuantity: string;
   lInterestRate: string;
@@ -27,20 +27,20 @@ export interface RfqResponse {
   lImB: string;
   lDfA: string;
   lDfB: string;
-  lExpirationA: number;
-  lExpirationB: number;
-  lTimelockA: number;
-  lTimelockB: number;
+  lExpirationA: bigint;
+  lExpirationB: bigint;
+  lTimelockA: bigint;
+  lTimelockB: bigint;
 }
 
 export interface QuoteResponse {
   id: string;
   chainId: number;
-  createdAt: number;
+  createdAt: bigint;
   userId: string;
   userAddress: string;
   rfqId: string;
-  expiration: number;
+  expiration: bigint;
   sMarketPrice: string;
   sPrice: string;
   sQuantity: string;
@@ -59,15 +59,15 @@ export interface signedWrappedOpenQuoteResponse {
   parity: boolean;
   maxConfidence: string;
   assetHex: string;
-  maxDelay: number;
+  maxDelay: bigint;
   precision: number;
   imA: string;
   imB: string;
   dfA: string;
   dfB: string;
-  expiryA: number;
-  expiryB: number;
-  timeLock: number;
+  expiryA: bigint;
+  expiryB: bigint;
+  timeLock: bigint;
   nonceBoracle: number;
   signatureBoracle: string;
   isLong: boolean;
@@ -81,7 +81,7 @@ export interface signedWrappedOpenQuoteResponse {
   authorized: string;
   nonceOpenQuote: number;
   signatureOpenQuote: string;
-  emitTime: number;
+  emitTime: bigint;
   messageState: number;
 }
 
@@ -98,7 +98,7 @@ export interface signedFillOpenQuoteResponse {
   amount: string;
   nonceAcceptQuote: number;
   signatureAcceptQuote: string;
-  emitTime: number;
+  emitTime: bigint;
   messageState: number;
 }
 
@@ -111,7 +111,7 @@ export interface signedCancelOpenQuoteResponse {
   targetHash: string;
   nonceCancel: number;
   signatureCancel: string;
-  emitTime: number;
+  emitTime: bigint;
   messageState: number;
 }
 
@@ -125,11 +125,11 @@ export interface signedCloseQuoteResponse {
   price: string;
   amount: string;
   limitOrStop: number;
-  expiry: number;
+  expiry: bigint;
   authorized: string;
   nonce: number;
   signatureClose: string;
-  emitTime: number;
+  emitTime: bigint;
   messageState: number;
 }
 
@@ -144,7 +144,7 @@ export interface signedCancelCloseQuoteResponse {
   targetHash: string;
   nonceCancel: number;
   signature: string;
-  emitTime: number;
+  emitTime: bigint;
   messageState: number;
 }
 
@@ -154,7 +154,7 @@ export interface PriceResponse {
   bidPrice: string;
   askPrice: string;
   provider: string;
-  timestamp: number;
+  timestamp: bigint;
 }
 
 export interface PricesResponse {
