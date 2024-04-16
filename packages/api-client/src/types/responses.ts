@@ -56,7 +56,7 @@ export interface signedWrappedOpenQuoteResponse {
   chainId: number;
   verifyingContract: string;
   x: string;
-  parity: boolean;
+  parity: string;
   maxConfidence: string;
   assetHex: string;
   maxDelay: string;
@@ -71,7 +71,6 @@ export interface signedWrappedOpenQuoteResponse {
   nonceBoracle: number;
   signatureBoracle: string;
   isLong: boolean;
-  boracleId: number;
   price: string;
   amount: string;
   interestRate: string;

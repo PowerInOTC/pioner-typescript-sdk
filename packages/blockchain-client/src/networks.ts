@@ -389,7 +389,7 @@ export const networks: Networks = {
   sonic: {
     name: 'Sonic Testnet',
     pionerChainId: 'sonic',
-    rpc: ['https://rpcapi.sonic.fantom.network/'],
+    rpc: ['https://rpc.sonic.fantom.network/'],
     faucets: ['https://app.optimism.io/faucet'],
     chainId: 64165,
     networkId: 64165,
