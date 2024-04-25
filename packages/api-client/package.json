@@ -1,6 +1,6 @@
 {
   "name": "@pionerfriends/api-client",
-  "version": "1.0.24",
+  "version": "1.0.23",
   "description": "> TODO: description",
   "author": "Pioner <contact@pioner.io>",
   "homepage": "",
@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "axios": "^1.6.8",
-    "viem": "^2.9.26",
+    "ethers": "^6.11.1",
     "ws": "^8.16.0"
   },
   "peerDependencies": {
@@ -32,5 +32,5 @@
   "devDependencies": {
     "@types/ws": "^8.5.10"
   },
-  "gitHead": "a3cf21c694e68a3b74d4f3a1202edaf4c055f491"
+  "gitHead": "55ef996ab003d63ca8fd0dccce1cad8e782d4868"
 }
