@@ -1,5 +1,5 @@
-import ethers from 'ethers';
 import axios, { AxiosResponse } from 'axios';
+import { WalletClient } from 'viem';
 import { config } from './config';
 import {
   QuoteRequest,
@@ -20,6 +20,7 @@ import {
   signedFillOpenQuoteResponse,
   signedWrappedOpenQuoteResponse,
 } from './types/responses';
+import { PionResult } from './types/pion';
 
 const protocol: string = config.https ? 'https' : 'http';
 const serverAddress = config.serverAddress;
@@ -357,6 +358,38 @@ export async function getSignedCancelCloseQuotes(
   );
 }
 
+export async function getPionSignature(
+  requestAsset1: string,
+  requestAsset2: string,
+  requestPairBid: string,
+  requestPairAsk: string,
+  requestConfidence: string,
+  requestSignTime: string,
+  requestPrecision: string | undefined = undefined,
+  requestConfPrecision: string | undefined = undefined,
+  maxTimestampDiff: string | undefined = undefined,
+  token: string,
+  timeout: number = 10000,
+): Promise<AxiosResponse<PionResult> | undefined> {
+  let apiUrl = `${protocol}://${serverAddress}:${serverPort}/api/v1/get_pion_signature?requestAsset1=${requestAsset1}&requestAsset2=${requestAsset2}&requestPairBid=${requestPairBid}&requestPairAsk=${requestPairAsk}&requestConfidence=${requestConfidence}&requestSignTime=${requestSignTime}`;
+  if (requestPrecision) {
+    apiUrl += `&requestPrecision=${requestPrecision}`;
+  }
+  if (requestConfPrecision) {
+    apiUrl += `&requestConfPrecision=${requestConfPrecision}`;
+  }
+  if (maxTimestampDiff) {
+    apiUrl += `&maxTimestampDiff=${maxTimestampDiff}`;
+  }
+
+  return await axios.get(apiUrl, {
+    headers: {
+      Authorization: token,
+    },
+    timeout: timeout,
+  });
+}
+
 export async function logout(
   token: string,
   timeout: number = 3000,
@@ -397,9 +430,12 @@ export async function login(
 }
 
 export async function getPayloadAndLogin(
-  wallet: ethers.Wallet,
+  wallet: WalletClient,
 ): Promise<string | null> {
-  const address = wallet.address;
+  if (!wallet.account) {
+    return null;
+  }
+  const address = wallet.account.address;
   const payloadResponse = await getPayload(address);
 
   if (
@@ -413,7 +449,10 @@ export async function getPayloadAndLogin(
 
   const { uuid, message } = payloadResponse.data;
 
-  const signedMessage = await wallet.signMessage(message);
+  const signedMessage = await wallet.signMessage({
+    account: wallet.account,
+    message: message,
+  });
 
   const loginResponse = await login(uuid, signedMessage);
 
