@@ -1,4 +1,4 @@
-export interface Signature {
+export interface PionDataSignature {
   owner: string;
   ownerPubKey: {
     x: string;
@@ -7,13 +7,13 @@ export interface Signature {
   signature: string;
 }
 
-export interface SignParams {
+export interface PionDataSignParams {
   name: string;
   type: string;
   value: string;
 }
 
-export interface Result {
+export interface PionDataResult {
   asset1: string;
   asset2: string;
   requestPairBid: string;
@@ -26,7 +26,7 @@ export interface Result {
   oldestTimestamp: string;
 }
 
-export interface Data {
+export interface PionData {
   uid: string;
   params: {
     asset1: string;
@@ -37,9 +37,9 @@ export interface Data {
     requestSignTime: string;
   };
   timestamp: number;
-  result: Result;
+  result: PionDataResult;
   resultHash: string;
-  signParams: SignParams[];
+  signParams: PionDataSignParams[];
   init: {
     nonceAddress: string;
   };
@@ -56,9 +56,9 @@ export interface PionResult {
     deploymentSeed: string;
     nSign: number;
     gwAddress: string;
-    data: Data;
+    data: PionData;
     startedAt: number;
     confirmedAt: number;
-    signatures: Signature[];
+    signatures: PionDataSignature[];
   };
 }
