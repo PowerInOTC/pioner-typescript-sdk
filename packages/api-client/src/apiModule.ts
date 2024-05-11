@@ -180,10 +180,10 @@ export async function getSignedWrappedOpenQuotes(
     {
       params: {
         version: version,
-        chainId: chainId,
-        onlyActive: onlyActive,
-        start: start,
-        end: end,
+        chainId: chainId.toString(),
+        onlyActive: onlyActive?.toString(),
+        start: start?.toString(),
+        end: end?.toString(),
         issuerAddress: issuerAddress,
         targetAddress: targetAddress,
       },
@@ -243,10 +243,10 @@ export async function getSignedFillOpenQuotes(
     {
       params: {
         version: version,
-        chainId: chainId,
-        onlyActive: onlyActive,
-        start: start,
-        end: end,
+        chainId: chainId.toString(),
+        onlyActive: onlyActive?.toString(),
+        start: start?.toString(),
+        end: end?.toString(),
         issuerAddress: issuerAddress,
         targetAddress: targetAddress,
       },
@@ -306,10 +306,10 @@ export async function getSignedCancelOpenQuotes(
     {
       params: {
         version: version,
-        chainId: chainId,
-        onlyActive: onlyActive,
-        start: start,
-        end: end,
+        chainId: chainId.toString(),
+        onlyActive: onlyActive?.toString(),
+        start: start?.toString(),
+        end: end?.toString(),
         issuerAddress: issuerAddress,
         targetAddress: targetAddress,
       },
@@ -369,10 +369,10 @@ export async function getSignedCloseQuotes(
     {
       params: {
         version: version,
-        chainId: chainId,
-        onlyActive: onlyActive,
-        start: start,
-        end: end,
+        chainId: chainId.toString(),
+        onlyActive: onlyActive?.toString(),
+        start: start?.toString(),
+        end: end?.toString(),
         issuerAddress: issuerAddress,
         targetAddress: targetAddress,
       },
@@ -432,10 +432,10 @@ export async function getSignedCancelCloseQuotes(
     {
       params: {
         version: version,
-        chainId: chainId,
-        onlyActive: onlyActive,
-        start: start,
-        end: end,
+        chainId: chainId.toString(),
+        onlyActive: onlyActive?.toString(),
+        start: start?.toString(),
+        end: end?.toString(),
         issuerAddress: issuerAddress,
         targetAddress: targetAddress,
       },
