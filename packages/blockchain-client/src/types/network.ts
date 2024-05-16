@@ -1,18 +1,18 @@
 export type NetworkKey =
-  | 'bnbTest'
-  | 'arbitrumSepoliaTest'
-  | 'mumbai'
-  | 'opSepoliaTest'
-  | 'fuji'
-  | 'avax'
-  | 'mantaTest'
-  | 'baseSepoliaTest'
-  | 'skevmTest'
-  | 'sonic';
+  | 97
+  | 421614
+  | 80001
+  | 11155420
+  | 43113
+  | 43114
+  | 3441005
+  | 84532
+  | 1442
+  | 64165;
 
 export interface NetworkInfo {
   name: string;
-  pionerChainId: NetworkKey;
+  pionerChainId: string;
   config?: string;
   title?: string;
   chain?: string;
@@ -29,7 +29,7 @@ export interface NetworkInfo {
   };
   infoURL?: string;
   shortName?: string;
-  chainId: number;
+  chainId: NetworkKey;
   networkId?: number;
   slip44?: number;
   explorers?: {

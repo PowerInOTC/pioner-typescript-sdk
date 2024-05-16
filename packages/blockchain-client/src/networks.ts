@@ -1,7 +1,7 @@
 import { Networks } from './types/network';
 
 export const networks: Networks = {
-  bnbTest: {
+  97: {
     name: 'BNB Smart Chain Testnet',
     pionerChainId: 'bnbTest',
     config: 'BSC testnet',
@@ -46,7 +46,7 @@ export const networks: Networks = {
       PionerV1Wrapper: '',
     },
   },
-  arbitrumSepoliaTest: {
+  421614: {
     name: 'Arbitrum Sepolia',
     pionerChainId: 'arbitrumSepoliaTest',
     config: 'Arbitrum Sepolia',
@@ -95,7 +95,7 @@ export const networks: Networks = {
       PionerV1Wrapper: '',
     },
   },
-  mumbai: {
+  80001: {
     name: 'Mumbai',
     pionerChainId: 'mumbai',
     config: 'Mumbai',
@@ -139,7 +139,7 @@ export const networks: Networks = {
       PionerV1Wrapper: '',
     },
   },
-  opSepoliaTest: {
+  11155420: {
     name: 'OP Sepolia Testnet',
     pionerChainId: 'opSepoliaTest',
     config: 'Optimism Sepolia',
@@ -176,7 +176,7 @@ export const networks: Networks = {
       PionerV1Wrapper: '',
     },
   },
-  fuji: {
+  43113: {
     name: 'Avalanche Fuji Testnet',
     pionerChainId: 'fuji',
     config: 'fuji',
@@ -217,7 +217,7 @@ export const networks: Networks = {
       PionerV1Wrapper: '0xD607412293711928C574a5CcF8AF2e1aca0d4543',
     },
   },
-  avax: {
+  43114: {
     name: 'Avalanche C-Chain',
     pionerChainId: 'avax',
     chain: 'AVAX',
@@ -262,7 +262,7 @@ export const networks: Networks = {
       PionerV1Wrapper: '',
     },
   },
-  mantaTest: {
+  3441005: {
     name: 'Manta Pacific Testnet',
     pionerChainId: 'mantaTest',
     config: 'Mantle Testnet',
@@ -307,7 +307,7 @@ export const networks: Networks = {
       PionerV1Wrapper: '',
     },
   },
-  baseSepoliaTest: {
+  84532: {
     name: 'Base Sepolia Testnet',
     pionerChainId: 'baseSepoliaTest',
     config: 'Base Sepolia',
@@ -349,7 +349,7 @@ export const networks: Networks = {
       PionerV1Wrapper: '',
     },
   },
-  skevmTest: {
+  1442: {
     name: 'Polygon zkEVM Testnet',
     pionerChainId: 'skevmTest',
     config: 'zkEVM Testnet',
@@ -386,7 +386,7 @@ export const networks: Networks = {
       PionerV1Wrapper: '',
     },
   },
-  sonic: {
+  64165: {
     name: 'Sonic Testnet',
     pionerChainId: 'sonic',
     rpc: ['https://rpc.sonic.fantom.network/'],
