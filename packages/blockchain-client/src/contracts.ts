@@ -136,6 +136,7 @@ export const contracts: Contracts = {
     abi: PionerV1WrapperContract.abi,
     events: {
       EIP712DomainChanged: 'EIP712DomainChanged',
+      acceptQuoteEvent: 'acceptQuoteEvent',
     },
     functions: {
       wrapperCloseLimitMM: 'wrapperCloseLimitMM',
