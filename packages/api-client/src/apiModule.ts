@@ -575,3 +575,22 @@ export async function getPayloadAndLogin(
 
   return token;
 }
+
+export async function extendToken(
+  token: string,
+  options?: {
+    timeout?: number;
+  },
+): Promise<AxiosResponse<{ message: string }> | undefined> {
+  const { timeout = 3000 } = options || {};
+
+  return await axios.post(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/extend_token`,
+    {
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}

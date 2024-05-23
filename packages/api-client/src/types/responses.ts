@@ -133,8 +133,6 @@ export interface signedCloseQuoteResponse {
 }
 
 export interface signedCancelCloseQuoteResponse {
-  id: string;
-  createdAt: number;
   issuerAddress: string;
   counterpartyAddress: string;
   version: string;

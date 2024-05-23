@@ -1,6 +1,6 @@
 import WebSocket from 'ws';
 
-const PING_TIMEOUT_DURATION = 30000; // 30s
+const PING_TIMEOUT_DURATION = 30000;
 
 export class ResilientWebSocketClient {
   private endpoint: string;
@@ -26,20 +26,19 @@ export class ResilientWebSocketClient {
     this.onClose = () => {};
   }
 
-  /*async send(data: any) {
-
+  async send(data: any) {
     await this.waitForMaybeReadyWebSocket();
 
     if (this.wsClient === undefined) {
-        this.onError(
-          new Error(
-            `Couldn't connect to the websocket server. Error callback is called.`,
-          ),
-        );
+      this.onError(
+        new Error(
+          `Couldn't connect to the websocket server. Error callback is called.`,
+        ),
+      );
     } else {
       this.wsClient?.send(data);
     }
-  }*/
+  }
 
   async startWebSocket() {
     if (this.wsClient !== undefined) {
