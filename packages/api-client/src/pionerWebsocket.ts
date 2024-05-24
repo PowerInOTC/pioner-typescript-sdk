@@ -10,6 +10,7 @@ enum WebSocketType {
   LiveRfqs = 3,
   LiveWrappedOpenQuotes = 4,
   LiveOpenQuoteFilled = 5,
+  LiveWrappedCloseQuotes = 6,
 }
 
 export class PionerWebsocketClient<T> {
@@ -40,6 +41,8 @@ export class PionerWebsocketClient<T> {
       this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_wrapped_open_quotes`;
     } else if (type === WebSocketType.LiveOpenQuoteFilled) {
       this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_open_quote_filled`;
+    } else if (type === WebSocketType.LiveWrappedCloseQuotes) {
+      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_wrapped_close_quotes`;
     } else {
       throw new Error('Invalid WebSocket type');
     }
