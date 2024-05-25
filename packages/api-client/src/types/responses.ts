@@ -157,3 +157,32 @@ export interface PriceResponse {
 export interface PricesResponse {
   [assetName: string]: PriceResponse;
 }
+
+export interface PositionResponse {
+  id: string;
+  chainId: number;
+  createdAt: string;
+  bContractId: number;
+  signatureOpenQuote: string;
+  symbol: string;
+  entryPrice: string;
+  amount: string;
+  entryTime: string;
+  pA: string;
+  pB: string;
+  interestRate: string;
+  isAPayingAPR: boolean;
+  openTime: string;
+  imA: string;
+  imB: string;
+  dfA: string;
+  dfB: string;
+  expiryA: string;
+  expiryB: string;
+  timeLock: string;
+  mtm: string;
+  upnl: string;
+  estLiq: string;
+  state: number;
+  lastUpdate: string;
+}

@@ -1,7 +1,14 @@
 import WebSocket from 'ws';
 import { ResilientWebSocketClient } from './utils/websocketClient';
 import { config } from './config';
-import { PriceResponse, QuoteResponse, RfqResponse, signedCloseQuoteResponse, signedWrappedOpenQuoteResponse } from './types';
+import {
+  PositionResponse,
+  PriceResponse,
+  QuoteResponse,
+  RfqResponse,
+  signedCloseQuoteResponse,
+  signedWrappedOpenQuoteResponse,
+} from './types';
 
 type WebSocketCallback<T> = (message: T) => void;
 
@@ -10,9 +17,8 @@ export enum WebSocketType {
   LiveQuotes = 2,
   LiveRfqs = 3,
   LiveWrappedOpenQuotes = 4,
-  LiveOpenQuoteFilled = 5,
-  LiveCloseQuotes = 6,
-  LiveCloseQuotesFilled = 7,
+  LiveCloseQuotes = 5,
+  LivePositions = 6,
 }
 
 type ResponseMapping = {
@@ -20,9 +26,8 @@ type ResponseMapping = {
   [WebSocketType.LiveQuotes]: QuoteResponse;
   [WebSocketType.LiveRfqs]: RfqResponse;
   [WebSocketType.LiveWrappedOpenQuotes]: signedWrappedOpenQuoteResponse;
-  [WebSocketType.LiveOpenQuoteFilled]: signedWrappedOpenQuoteResponse;
   [WebSocketType.LiveCloseQuotes]: signedCloseQuoteResponse;
-  [WebSocketType.LiveCloseQuotesFilled]: signedCloseQuoteResponse;
+  [WebSocketType.LivePositions]: PositionResponse;
 };
 
 export class PionerWebsocketClient<T extends WebSocketType> {
@@ -51,12 +56,10 @@ export class PionerWebsocketClient<T extends WebSocketType> {
       this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_rfqs`;
     } else if (type === WebSocketType.LiveWrappedOpenQuotes) {
       this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_wrapped_open_quotes`;
-    } else if (type === WebSocketType.LiveOpenQuoteFilled) {
-      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_open_quote_filled`;
     } else if (type === WebSocketType.LiveCloseQuotes) {
       this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_close_quotes`;
-    } else if (type === WebSocketType.LiveCloseQuotesFilled) {
-      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_close_quote_filled`;
+    } else if (type === WebSocketType.LivePositions) {
+      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_positions`;
     } else {
       throw new Error('Invalid WebSocket type');
     }
