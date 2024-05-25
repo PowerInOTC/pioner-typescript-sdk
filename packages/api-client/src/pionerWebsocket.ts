@@ -1,30 +1,42 @@
 import WebSocket from 'ws';
 import { ResilientWebSocketClient } from './utils/websocketClient';
 import { config } from './config';
+import { PriceResponse, QuoteResponse, RfqResponse, signedCloseQuoteResponse, signedWrappedOpenQuoteResponse } from './types';
 
 type WebSocketCallback<T> = (message: T) => void;
 
-enum WebSocketType {
+export enum WebSocketType {
   LivePrices = 1,
   LiveQuotes = 2,
   LiveRfqs = 3,
   LiveWrappedOpenQuotes = 4,
   LiveOpenQuoteFilled = 5,
-  LiveWrappedCloseQuotes = 6,
+  LiveCloseQuotes = 6,
+  LiveCloseQuotesFilled = 7,
 }
 
-export class PionerWebsocketClient<T> {
+type ResponseMapping = {
+  [WebSocketType.LivePrices]: PriceResponse;
+  [WebSocketType.LiveQuotes]: QuoteResponse;
+  [WebSocketType.LiveRfqs]: RfqResponse;
+  [WebSocketType.LiveWrappedOpenQuotes]: signedWrappedOpenQuoteResponse;
+  [WebSocketType.LiveOpenQuoteFilled]: signedWrappedOpenQuoteResponse;
+  [WebSocketType.LiveCloseQuotes]: signedCloseQuoteResponse;
+  [WebSocketType.LiveCloseQuotesFilled]: signedCloseQuoteResponse;
+};
+
+export class PionerWebsocketClient<T extends WebSocketType> {
   private wsClient?: ResilientWebSocketClient;
   private readonly wsEndpoint: string;
   private readonly protocol: string;
-  private onMessageCallback?: WebSocketCallback<T>;
+  private onMessageCallback?: WebSocketCallback<ResponseMapping[T]>;
   private onErrorCallback?: (error: Error) => void;
   private onReconnectCallback?: () => void;
   private onCloseCallback?: () => void;
 
   constructor(
-    type: WebSocketType,
-    onMessage?: WebSocketCallback<T>,
+    type: T,
+    onMessage?: WebSocketCallback<ResponseMapping[T]>,
     onError?: (error: Error) => void,
     onReconnect?: () => void,
     onClose?: () => void,
@@ -41,8 +53,10 @@ export class PionerWebsocketClient<T> {
       this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_wrapped_open_quotes`;
     } else if (type === WebSocketType.LiveOpenQuoteFilled) {
       this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_open_quote_filled`;
-    } else if (type === WebSocketType.LiveWrappedCloseQuotes) {
-      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_wrapped_close_quotes`;
+    } else if (type === WebSocketType.LiveCloseQuotes) {
+      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_close_quotes`;
+    } else if (type === WebSocketType.LiveCloseQuotesFilled) {
+      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_close_quote_filled`;
     } else {
       throw new Error('Invalid WebSocket type');
     }
@@ -79,9 +93,9 @@ export class PionerWebsocketClient<T> {
     };
 
     this.wsClient.onMessage = (data: WebSocket.Data) => {
-      let message: T;
+      let message: ResponseMapping[T];
       try {
-        message = JSON.parse(data.toString()) as T;
+        message = JSON.parse(data.toString()) as ResponseMapping[T];
         if (this.onMessageCallback) {
           this.onMessageCallback(message);
         }
