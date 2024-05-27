@@ -23,7 +23,7 @@
   ],
   "dependencies": {
     "axios": "^1.7.2",
-    "viem": "^2.12.1",
+    "viem": "~2.10.11",
     "ws": "^8.17.0"
   },
   "peerDependencies": {
@@ -32,5 +32,5 @@
   "devDependencies": {
     "@types/ws": "^8.5.10"
   },
-  "gitHead": "10ff1ad01b514fa800d09075f614134eb9784554"
+  "gitHead": "d4d689c29a9458e983cb96c860445cc68795d82e"
 }
