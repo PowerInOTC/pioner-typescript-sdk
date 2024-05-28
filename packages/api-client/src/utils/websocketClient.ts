@@ -1,4 +1,4 @@
-import WebSocket from 'ws';
+import WebSocket from 'isomorphic-ws';
 
 const PING_TIMEOUT_DURATION = 30000;
 
@@ -36,7 +36,7 @@ export class ResilientWebSocketClient {
         ),
       );
     } else {
-      this.wsClient?.send(data);
+      this.wsClient.send(data);
     }
   }
 
@@ -46,14 +46,14 @@ export class ResilientWebSocketClient {
     }
 
     const headers = this.token ? { Authorization: this.token } : undefined;
-    this.wsClient = new WebSocket(this.endpoint, { headers: headers });
+    const wsOptions = headers ? { headers: headers } : undefined;
+    this.wsClient = new WebSocket(this.endpoint, wsOptions);
 
     this.wsUserClosed = false;
 
     this.wsClient.onopen = () => {
       this.wsFailedAttempts = 0;
-      // Ping handler is undefined in browser side so heartbeat is disabled.
-      if (this.wsClient!.on !== undefined) {
+      if (this.wsClient && typeof this.wsClient.on === 'function') {
         this.heartbeat();
       }
     };
@@ -68,7 +68,7 @@ export class ResilientWebSocketClient {
 
     this.wsClient.onclose = async (event) => {
       if (this.pingTimeout !== undefined) {
-        clearInterval(this.pingTimeout);
+        clearTimeout(this.pingTimeout);
       }
 
       if (this.wsUserClosed === false) {
@@ -90,8 +90,7 @@ export class ResilientWebSocketClient {
       this.onClose();
     };
 
-    if (this.wsClient.on !== undefined) {
-      // Ping handler is undefined in browser side
+    if (typeof this.wsClient.on === 'function') {
       this.wsClient.on('ping', this.heartbeat.bind(this));
     }
 
@@ -105,14 +104,6 @@ export class ResilientWebSocketClient {
     return true;
   }
 
-  /**
-   * Heartbeat is only enabled in node clients because they support handling
-   * ping-pong events.
-   *
-   * This approach only works when server constantly pings the clients which.
-   * Otherwise you might consider sending ping and acting on pong responses
-   * yourself.
-   */
   private heartbeat() {
     if (this.pingTimeout !== undefined) {
       clearTimeout(this.pingTimeout);

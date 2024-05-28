@@ -1,4 +1,3 @@
-import WebSocket from 'ws';
 import { ResilientWebSocketClient } from './utils/websocketClient';
 import { config } from './config';
 import {
@@ -95,7 +94,7 @@ export class PionerWebsocketClient<T extends WebSocketType> {
       }
     };
 
-    this.wsClient.onMessage = (data: WebSocket.Data) => {
+    this.wsClient.onMessage = (data) => {
       let message: ResponseMapping[T];
       try {
         message = JSON.parse(data.toString()) as ResponseMapping[T];
