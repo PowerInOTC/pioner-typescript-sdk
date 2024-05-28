@@ -78,7 +78,9 @@ export class PionerWebsocketClient<T extends WebSocketType> {
       throw new Error('wsClient is already set.');
     }
 
-    this.wsClient = new ResilientWebSocketClient(this.wsEndpoint, token);
+    this.wsClient = new ResilientWebSocketClient(
+      `${this.wsEndpoint}?token=${token}`,
+    );
 
     this.wsClient.onError = this.onWsError.bind(this);
 

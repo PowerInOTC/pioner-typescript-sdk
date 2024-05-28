@@ -8,16 +8,14 @@ export class ResilientWebSocketClient {
   private wsUserClosed: boolean;
   private wsFailedAttempts: number;
   private pingTimeout: undefined | NodeJS.Timeout;
-  private token: undefined | string;
 
   onError: (error: Error) => void;
   onMessage: (data: WebSocket.Data) => void;
   onReconnect: () => void;
   onClose: () => void;
 
-  constructor(endpoint: string, token?: string) {
+  constructor(endpoint: string) {
     this.endpoint = endpoint;
-    this.token = token ? token : undefined;
     this.wsUserClosed = true;
     this.wsFailedAttempts = 0;
     this.onError = () => {};
@@ -45,11 +43,9 @@ export class ResilientWebSocketClient {
       return;
     }
 
-    const headers = this.token ? { Authorization: this.token } : undefined;
-    const wsOptions = headers ? { headers: headers } : undefined;
-    this.wsClient = new WebSocket(this.endpoint, wsOptions);
-
     this.wsUserClosed = false;
+
+    this.wsClient = new WebSocket(this.endpoint);
 
     this.wsClient.onopen = () => {
       this.wsFailedAttempts = 0;
@@ -59,7 +55,7 @@ export class ResilientWebSocketClient {
     };
 
     this.wsClient.onerror = (event) => {
-      this.onError(event.error);
+      this.onError(new Error(event.message));
     };
 
     this.wsClient.onmessage = (event) => {
@@ -72,7 +68,7 @@ export class ResilientWebSocketClient {
       }
 
       if (this.wsUserClosed === false) {
-        if (event.code == 3000 || event.code == 4000 || event.code == 1001) {
+        if (event.code === 3000 || event.code === 4000 || event.code === 1001) {
           this.onError(new Error(event.reason));
         } else {
           this.wsFailedAttempts += 1;
