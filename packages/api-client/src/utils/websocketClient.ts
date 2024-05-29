@@ -12,6 +12,7 @@ export class ResilientWebSocketClient {
   onError: (error: Error) => void;
   onMessage: (data: WebSocket.Data) => void;
   onReconnect: () => void;
+  onOpen: () => void;
   onClose: () => void;
 
   constructor(endpoint: string) {
@@ -21,6 +22,7 @@ export class ResilientWebSocketClient {
     this.onError = () => {};
     this.onMessage = () => {};
     this.onReconnect = () => {};
+    this.onOpen = () => {};
     this.onClose = () => {};
   }
 
@@ -48,6 +50,7 @@ export class ResilientWebSocketClient {
     this.wsClient = new WebSocket(this.endpoint);
 
     this.wsClient.onopen = () => {
+      this.onOpen();
       this.wsFailedAttempts = 0;
       if (this.wsClient && typeof this.wsClient.on === 'function') {
         this.heartbeat();

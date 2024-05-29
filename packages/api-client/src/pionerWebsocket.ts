@@ -36,14 +36,16 @@ export class PionerWebsocketClient<T extends WebSocketType> {
   private onMessageCallback?: WebSocketCallback<ResponseMapping[T]>;
   private onErrorCallback?: (error: Error) => void;
   private onReconnectCallback?: () => void;
+  private onOpenCallback?: () => void;
   private onCloseCallback?: () => void;
 
   constructor(
     type: T,
     onMessage?: WebSocketCallback<ResponseMapping[T]>,
-    onError?: (error: Error) => void,
-    onReconnect?: () => void,
+    onOpen?: () => void,
     onClose?: () => void,
+    onReconnect?: () => void,
+    onError?: (error: Error) => void,
   ) {
     this.protocol = config.https ? 'wss' : 'ws';
 
@@ -64,9 +66,10 @@ export class PionerWebsocketClient<T extends WebSocketType> {
     }
 
     this.onMessageCallback = onMessage;
-    this.onErrorCallback = onError;
-    this.onReconnectCallback = onReconnect;
+    this.onOpenCallback = onOpen;
     this.onCloseCallback = onClose;
+    this.onReconnectCallback = onReconnect;
+    this.onErrorCallback = onError;
   }
 
   public async startWebSocket(token: string) {
@@ -87,6 +90,12 @@ export class PionerWebsocketClient<T extends WebSocketType> {
     this.wsClient.onReconnect = () => {
       if (this.onReconnectCallback) {
         this.onReconnectCallback();
+      }
+    };
+
+    this.wsClient.onOpen = () => {
+      if (this.onOpenCallback) {
+        this.onOpenCallback();
       }
     };
 
