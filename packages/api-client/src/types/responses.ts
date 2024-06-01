@@ -47,6 +47,8 @@ export interface QuoteResponse {
   lMarketPrice: string;
   lPrice: string;
   lQuantity: string;
+  minAmount: string;
+  maxAmount: string;
 }
 
 export interface signedWrappedOpenQuoteResponse {
@@ -82,6 +84,9 @@ export interface signedWrappedOpenQuoteResponse {
   signatureOpenQuote: string;
   emitTime: string;
   messageState: number;
+  bid: string;
+  ask: string;
+  lastUpdate: string;
 }
 
 export interface signedFillOpenQuoteResponse {
@@ -130,6 +135,9 @@ export interface signedCloseQuoteResponse {
   signatureClose: string;
   emitTime: string;
   messageState: number;
+  bid: string;
+  ask: string;
+  lastUpdate: string;
 }
 
 export interface signedCancelCloseQuoteResponse {
@@ -167,7 +175,6 @@ export interface PositionResponse {
   symbol: string;
   entryPrice: string;
   amount: string;
-  entryTime: string;
   pA: string;
   pB: string;
   interestRate: string;
@@ -180,9 +187,7 @@ export interface PositionResponse {
   expiryA: string;
   expiryB: string;
   timeLock: string;
-  mtm: string;
-  upnl: string;
-  estLiq: string;
   state: number;
+  mtm: string;
   lastUpdate: string;
 }
