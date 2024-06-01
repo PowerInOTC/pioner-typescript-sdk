@@ -135,6 +135,8 @@ export interface signedCloseQuoteResponse {
   signatureClose: string;
   emitTime: string;
   messageState: number;
+  assetHex: string;
+  signatureOpenQuote: string;
   bid: string;
   ask: string;
   lastUpdate: string;
