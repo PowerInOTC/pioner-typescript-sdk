@@ -126,6 +126,7 @@ export interface signedCloseQuoteResponse {
   chainId: number;
   verifyingContract: string;
   bcontractId: number;
+  isLong: boolean;
   price: string;
   amount: string;
   limitOrStop: number;

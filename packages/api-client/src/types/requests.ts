@@ -39,6 +39,8 @@ export interface QuoteRequest {
   lMarketPrice: string;
   lPrice: string;
   lQuantity: string;
+  minAmount: string;
+  maxAmount: string;
 }
 
 export interface SignedWrappedOpenQuoteRequest {
@@ -113,6 +115,7 @@ export interface SignedCloseQuoteRequest {
   chainId: number;
   verifyingContract: string;
   bcontractId: number;
+  isLong: boolean;
   price: string;
   amount: string;
   limitOrStop: number;

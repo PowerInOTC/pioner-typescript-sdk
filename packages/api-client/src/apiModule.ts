@@ -11,6 +11,7 @@ import {
   SignedWrappedOpenQuoteRequest,
 } from './types/requests';
 import {
+  PositionResponse,
   PricesResponse,
   QuoteResponse,
   RfqResponse,
@@ -432,6 +433,46 @@ export async function getSignedCancelCloseQuotes(
     {
       params: {
         version: version,
+        chainId: chainId.toString(),
+        onlyActive: onlyActive?.toString(),
+        start: start?.toString(),
+        end: end?.toString(),
+        issuerAddress: issuerAddress,
+        targetAddress: targetAddress,
+      },
+      headers: {
+        Authorization: token,
+      },
+      timeout: timeout,
+    },
+  );
+}
+
+export async function getPositions(
+  chainId: number,
+  token: string,
+  options?: {
+    onlyActive?: boolean;
+    start?: number;
+    end?: number;
+    issuerAddress?: string;
+    targetAddress?: string;
+    timeout?: number;
+  },
+): Promise<AxiosResponse<PositionResponse[]> | undefined> {
+  const {
+    onlyActive,
+    start,
+    end,
+    issuerAddress,
+    targetAddress,
+    timeout = 3000,
+  } = options || {};
+
+  return await axios.get(
+    `${protocol}://${serverAddress}:${serverPort}/api/v1/get_positions`,
+    {
+      params: {
         chainId: chainId.toString(),
         onlyActive: onlyActive?.toString(),
         start: start?.toString(),
