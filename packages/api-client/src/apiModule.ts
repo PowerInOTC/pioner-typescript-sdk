@@ -457,6 +457,7 @@ export async function getPositions(
     end?: number;
     issuerAddress?: string;
     targetAddress?: string;
+    address?: string;
     timeout?: number;
   },
 ): Promise<AxiosResponse<PositionResponse[]> | undefined> {
@@ -466,6 +467,7 @@ export async function getPositions(
     end,
     issuerAddress,
     targetAddress,
+    address,
     timeout = 3000,
   } = options || {};
 
@@ -479,6 +481,7 @@ export async function getPositions(
         end: end?.toString(),
         issuerAddress: issuerAddress,
         targetAddress: targetAddress,
+        address: address,
       },
       headers: {
         Authorization: token,
