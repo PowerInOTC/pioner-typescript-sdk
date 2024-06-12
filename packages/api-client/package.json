@@ -24,7 +24,7 @@
   "dependencies": {
     "axios": "^1.7.2",
     "isomorphic-ws": "^5.0.0",
-    "viem": "^2.13.7",
+    "viem": "^2.13.8",
     "ws": "^8.17.0"
   },
   "peerDependencies": {
@@ -33,5 +33,5 @@
   "devDependencies": {
     "@types/ws": "^8.5.10"
   },
-  "gitHead": "6b332111a058a23d7ff24bbee24f8f42a0986749"
+  "gitHead": "0432452c9b36d59c2a2c5eeead8f0e41ae0e07ce"
 }

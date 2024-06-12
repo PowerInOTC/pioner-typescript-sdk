@@ -70,7 +70,7 @@ export interface signedWrappedOpenQuoteResponse {
   expiryA: string;
   expiryB: string;
   timeLock: string;
-  nonceBoracle: number;
+  nonceBoracle: string;
   signatureBoracle: string;
   isLong: boolean;
   price: string;
@@ -80,7 +80,7 @@ export interface signedWrappedOpenQuoteResponse {
   frontEnd: string;
   affiliate: string;
   authorized: string;
-  nonceOpenQuote: number;
+  nonceOpenQuote: string;
   signatureOpenQuote: string;
   emitTime: string;
   messageState: number;
@@ -100,7 +100,7 @@ export interface signedFillOpenQuoteResponse {
   acceptPrice: string;
   backendAffiliate: string;
   amount: string;
-  nonceAcceptQuote: number;
+  nonceAcceptQuote: string;
   signatureAcceptQuote: string;
   emitTime: string;
   messageState: number;
@@ -113,7 +113,7 @@ export interface signedCancelOpenQuoteResponse {
   chainId: number;
   verifyingContract: string;
   targetHash: string;
-  nonceCancel: number;
+  nonceCancel: string;
   signatureCancel: string;
   emitTime: string;
   messageState: number;
@@ -132,7 +132,7 @@ export interface signedCloseQuoteResponse {
   limitOrStop: number;
   expiry: string;
   authorized: string;
-  nonce: number;
+  nonce: string;
   signatureClose: string;
   emitTime: string;
   messageState: number;
@@ -150,7 +150,7 @@ export interface signedCancelCloseQuoteResponse {
   chainId: number;
   verifyingContract: string;
   targetHash: string;
-  nonceCancel: number;
+  nonceCancel: string;
   signature: string;
   emitTime: string;
   messageState: number;
