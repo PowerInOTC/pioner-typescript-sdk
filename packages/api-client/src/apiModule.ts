@@ -26,11 +26,11 @@ import { PionResult } from './types/pion';
 export class ApiInterface {
   public serverAddress: string;
 
-  constructor(serverAddress?: string) {
-    if (!serverAddress) {
-      this.serverAddress = config.serverAddress;
+  constructor(options?: { serverAddress?: string }) {
+    if (options && options.serverAddress) {
+      this.serverAddress = options.serverAddress;
     } else {
-      this.serverAddress = serverAddress;
+      this.serverAddress = config.serverAddress;
     }
   }
 
