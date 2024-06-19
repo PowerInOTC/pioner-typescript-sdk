@@ -33,5 +33,5 @@
   "devDependencies": {
     "@types/ws": "^8.5.10"
   },
-  "gitHead": "4f17a0e2e55e27adccd85ea2c3c78f0a0911c663"
+  "gitHead": "c78eb2da19d50809067062d91cc75140bfc12bf2"
 }
