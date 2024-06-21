@@ -1,6 +1,6 @@
 {
   "name": "@pionerfriends/api-client",
-  "version": "1.0.50",
+  "version": "1.0.51",
   "description": "> TODO: description",
   "author": "Pioner <contact@pioner.io>",
   "homepage": "",
@@ -33,5 +33,5 @@
   "devDependencies": {
     "@types/ws": "^8.5.10"
   },
-  "gitHead": "649584ab989530be1cd32f097bc21756a9aa6241"
+  "gitHead": "3952659ffe8d2925f3d12e1c73ba965d53b650e2"
 }
