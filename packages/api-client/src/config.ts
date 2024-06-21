@@ -1,3 +1,5 @@
 export const config = {
-  serverAddress: 'https://api.pio.finance:2096',
+  https: true,
+  serverAddress: 'api.pio.finance',
+  serverPort: '2096',
 };
