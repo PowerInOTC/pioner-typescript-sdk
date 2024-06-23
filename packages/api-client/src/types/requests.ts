@@ -118,7 +118,7 @@ export interface SignedCloseQuoteRequest {
   isLong: boolean;
   price: string;
   amount: string;
-  limitOrStop: number;
+  limitOrStop: string;
   expiry: string;
   authorized: string;
   nonce: string;

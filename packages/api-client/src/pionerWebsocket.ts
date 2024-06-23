@@ -50,17 +50,17 @@ export class PionerWebsocketClient<T extends WebSocketType> {
     this.protocol = config.https ? 'wss' : 'ws';
 
     if (type === WebSocketType.LivePrices) {
-      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_prices`;
+      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/api/v1/live_prices`;
     } else if (type === WebSocketType.LiveQuotes) {
-      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_quotes`;
+      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/api/v1/live_quotes`;
     } else if (type === WebSocketType.LiveRfqs) {
-      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_rfqs`;
+      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/api/v1/live_rfqs`;
     } else if (type === WebSocketType.LiveWrappedOpenQuotes) {
-      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_wrapped_open_quotes`;
+      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/api/v1/live_wrapped_open_quotes`;
     } else if (type === WebSocketType.LiveCloseQuotes) {
-      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_close_quotes`;
+      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/api/v1/live_close_quotes`;
     } else if (type === WebSocketType.LivePositions) {
-      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/live_positions`;
+      this.wsEndpoint = `${this.protocol}://${config.serverAddress}:${config.serverPort}/api/v1/live_positions`;
     } else {
       throw new Error('Invalid WebSocket type');
     }
