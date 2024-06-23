@@ -9,8 +9,7 @@ export type NetworkKey =
   | 84532
   | 1442
   | 64165
-  | 4002
-;
+  | 4002;
 
 export interface NetworkInfo {
   name: string;
