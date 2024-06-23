@@ -405,4 +405,23 @@ export const networks: Networks = {
       PionerV1Wrapper: '0xcE6C9f404D3f907ab391dDE4B964Be28090a77a3'
     },
   },
+  4002: {
+    name: 'Ftm Testnet',
+    pionerChainId: 'ftmTestnet',
+    rpc: ['https://rpc.ankr.com/fantom_testnet/'],
+    faucets: ['https://testnet.bnbchain.org/faucet-smart'],
+    chainId: 4002,
+    networkId: 4002,
+    contracts: {
+      FakeUSD : '0x5BF256c4caF463BE8fe1e57cAe390B5245079C55',
+      PionerV1: '0x33FD7230Faf831C980950EE181A46fCDe73A0FD6', 
+      PionerV1Compliance: '0xe6Ade75C62D9Bbb37250B884E4ADbe690D13603D', 
+      PionerV1Open: '0xC7C6387221E072dC5cDBA9E3168530Da579bAdeB', 
+      PionerV1Close: '0x0314605edB695ca19D19141Ff7F826088E5F935E', 
+      PionerV1Default: '0xB81f4582a8a365cFD9Cb16Eb2fb434f3795fa1B4', 
+      PionerV1View: '0xEa3348476D2E32F27872Ff9c71ee5F558Df08fB9', 
+      PionerV1Oracle: '0x39A921Cf769Fa6763669C71C521253419e32e67f', 
+      PionerV1Wrapper: '0x14C5BEb9594cea6BDbdf85F6a85c95B894127a5D'
+    },
+  }
 };
