@@ -72,6 +72,7 @@ export interface signedWrappedOpenQuoteResponse {
   timeLock: string;
   nonceBoracle: string;
   signatureBoracle: string;
+  signatureBoracleHash: string;
   isLong: boolean;
   price: string;
   amount: string;
@@ -82,6 +83,7 @@ export interface signedWrappedOpenQuoteResponse {
   authorized: string;
   nonceOpenQuote: string;
   signatureOpenQuote: string;
+  signatureOpenQuoteHash: string;
   emitTime: string;
   messageState: number;
   bid: string;
@@ -93,6 +95,7 @@ export interface signedFillOpenQuoteResponse {
   issuerAddress: string;
   counterpartyAddress: string;
   signatureOpenQuote: string;
+  signatureOpenQuoteHash: string;
   version: string;
   chainId: number;
   verifyingContract: string;
@@ -102,6 +105,7 @@ export interface signedFillOpenQuoteResponse {
   amount: string;
   nonceAcceptQuote: string;
   signatureAcceptQuote: string;
+  signatureAcceptQuoteHash: string;
   emitTime: string;
   messageState: number;
 }
@@ -115,6 +119,7 @@ export interface signedCancelOpenQuoteResponse {
   targetHash: string;
   nonceCancel: string;
   signatureCancel: string;
+  signatureCancelHash: string;
   emitTime: string;
   messageState: number;
 }
@@ -134,10 +139,12 @@ export interface signedCloseQuoteResponse {
   authorized: string;
   nonce: string;
   signatureClose: string;
+  signatureCloseHash: string;
   emitTime: string;
   messageState: number;
   assetHex: string;
   signatureOpenQuote: string;
+  signatureOpenQuoteHash: string;
   bid: string;
   ask: string;
   lastUpdate: string;
@@ -152,6 +159,7 @@ export interface signedCancelCloseQuoteResponse {
   targetHash: string;
   nonceCancel: string;
   signature: string;
+  signatureHash: string;
   emitTime: string;
   messageState: number;
 }
@@ -175,6 +183,7 @@ export interface PositionResponse {
   createdAt: string;
   bContractId: number;
   signatureOpenQuote: string;
+  signatureOpenQuoteHash: string;
   symbol: string;
   entryPrice: string;
   amount: string;
