@@ -174,8 +174,15 @@ export async function getSignedWrappedOpenQuotes(
     timeout?: number;
   },
 ): Promise<AxiosResponse<signedWrappedOpenQuoteResponse[]> | undefined> {
-  const { onlyActive, start, end, issuerAddress, targetAddress, timeout } =
-    options || {};
+  const {
+    onlyActive,
+    onlyFilled,
+    start,
+    end,
+    issuerAddress,
+    targetAddress,
+    timeout,
+  } = options || {};
 
   return await axios.get(
     `${protocol}://${serverAddress}:${serverPort}/api/v1/get_signed_wrapped_open_quote`,
@@ -184,6 +191,7 @@ export async function getSignedWrappedOpenQuotes(
         version: version,
         chainId: chainId.toString(),
         onlyActive: onlyActive?.toString(),
+        onlyFilled: onlyFilled?.toString(),
         start: start?.toString(),
         end: end?.toString(),
         issuerAddress: issuerAddress,
