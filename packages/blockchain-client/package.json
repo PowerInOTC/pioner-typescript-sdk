@@ -1,6 +1,6 @@
 {
   "name": "@pionerfriends/blockchain-client",
-  "version": "1.0.56",
+  "version": "1.0.57",
   "description": "> TODO: description",
   "author": "Pioner <contact@pioner.io>",
   "homepage": "",
@@ -27,5 +27,5 @@
   "peerDependencies": {
     "@types/node": "^20.11.25"
   },
-  "gitHead": "a583e84d7c87b4ab94606ae34eb674c0e07b6f7f"
+  "gitHead": "4ae5a4cb55e40dea38adf316f79a8f19e6c54af0"
 }
