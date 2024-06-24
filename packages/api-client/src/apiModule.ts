@@ -166,6 +166,7 @@ export async function getSignedWrappedOpenQuotes(
   token: string,
   options?: {
     onlyActive?: boolean;
+    onlyFilled?: boolean;
     start?: number;
     end?: number;
     issuerAddress?: string;
