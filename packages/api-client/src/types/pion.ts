@@ -1,4 +1,4 @@
-export interface PionDataSignature {
+export interface Signature {
   owner: string;
   ownerPubKey: {
     x: string;
@@ -7,15 +7,15 @@ export interface PionDataSignature {
   signature: string;
 }
 
-export interface PionDataSignParams {
+export interface SignParams {
   name: string;
   type: string;
   value: string;
 }
 
-export interface PionDataResult {
-  asset1: string;
-  asset2: string;
+export interface Result {
+  requestAsset1: string;
+  requestAsset2: string;
   requestPairBid: string;
   requestPairAsk: string;
   pairBid: string;
@@ -23,23 +23,30 @@ export interface PionDataResult {
   confidence: string;
   requestConfidence: string;
   requestSignTime: string;
-  oldestTimestamp: string;
+  requestPrecision: string;
+  proxyTimestamp: number;
 }
 
-export interface PionData {
+export interface Params {
+  requestAsset1: string;
+  requestAsset2: string;
+  requestPairBid: string;
+  requestPairAsk: string;
+  requestConfidence: string;
+  requestSignTime: string;
+  requestPrecision: string;
+  maxTimestampDiff: string;
+  requestConfPrecision: string;
+  requestUuid: string;
+}
+
+export interface Data {
   uid: string;
-  params: {
-    asset1: string;
-    asset2: string;
-    requestPairBid: string;
-    requestPairAsk: string;
-    requestConfidence: string;
-    requestSignTime: string;
-  };
+  params: Params;
   timestamp: number;
-  result: PionDataResult;
+  result: Result;
   resultHash: string;
-  signParams: PionDataSignParams[];
+  signParams: SignParams[];
   init: {
     nonceAddress: string;
   };
@@ -56,9 +63,9 @@ export interface PionResult {
     deploymentSeed: string;
     nSign: number;
     gwAddress: string;
-    data: PionData;
+    data: Data;
     startedAt: number;
     confirmedAt: number;
-    signatures: PionDataSignature[];
+    signatures: Signature[];
   };
 }
