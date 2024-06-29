@@ -99,7 +99,6 @@ export const contracts: Contracts = {
     version: '1.0',
     abi: PionerV1OpenContract.abi,
     events: {
-      acceptQuoteEvent: 'acceptQuoteEvent',
       cancelOpenQuoteEvent: 'cancelOpenQuoteEvent',
       cancelSignedMessageOpenEvent: 'cancelSignedMessageOpenEvent',
       EIP712DomainChanged: 'EIP712DomainChanged',
@@ -139,7 +138,6 @@ export const contracts: Contracts = {
       acceptQuoteEvent: 'acceptQuoteEvent',
       acceptCloseQuoteEvent: 'acceptCloseQuoteEvent',
       settlementEvent: 'settlementEvent',
-
     },
     functions: {
       wrapperCloseLimitMM: 'wrapperCloseLimitMM',
