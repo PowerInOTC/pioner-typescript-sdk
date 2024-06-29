@@ -137,6 +137,9 @@ export const contracts: Contracts = {
     events: {
       EIP712DomainChanged: 'EIP712DomainChanged',
       acceptQuoteEvent: 'acceptQuoteEvent',
+      acceptCloseQuoteEvent: 'acceptCloseQuoteEvent',
+      settlementEvent: 'settlementEvent',
+
     },
     functions: {
       wrapperCloseLimitMM: 'wrapperCloseLimitMM',
