@@ -47,7 +47,6 @@ export const contracts: Contracts = {
     version: '1.0',
     abi: PionerV1CloseContract.abi,
     events: {
-      acceptCloseQuoteEvent: 'acceptCloseQuoteEvent',
       cancelOpenCloseQuoteContractEvent: 'cancelOpenCloseQuoteContractEvent',
       cancelSignedMessageCloseEvent: 'cancelSignedMessageCloseEvent',
       closeMarketEvent: 'closeMarketEvent',
@@ -99,7 +98,6 @@ export const contracts: Contracts = {
     version: '1.0',
     abi: PionerV1OpenContract.abi,
     events: {
-      acceptQuoteEvent: 'acceptQuoteEvent',
       cancelOpenQuoteEvent: 'cancelOpenQuoteEvent',
       cancelSignedMessageOpenEvent: 'cancelSignedMessageOpenEvent',
       EIP712DomainChanged: 'EIP712DomainChanged',
@@ -137,6 +135,7 @@ export const contracts: Contracts = {
     events: {
       EIP712DomainChanged: 'EIP712DomainChanged',
       acceptQuoteEvent: 'acceptQuoteEvent',
+      acceptCloseQuoteEvent: 'acceptCloseQuoteEvent',
     },
     functions: {
       wrapperCloseLimitMM: 'wrapperCloseLimitMM',
